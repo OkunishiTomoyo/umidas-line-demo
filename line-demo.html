@@ -459,7 +459,23 @@ function showCarousel(type) {
         <div class="msg-bubble">
           鉄壁診断の結果を受け取りました！🛡️<br><br>
           診断結果に基づき、最適な改善策をご提案させていただきます。<br><br>
-          担当者より改めてご連絡いたしますので、少々お待ちください。
+          まずは下記カテゴリから詳細をご確認ください。
+        </div>
+        <div class="msg-time">16:15</div>
+      </div>
+      <div style="height:4px;"></div>
+      <div class="msg-row">
+        <div class="msg-avatar">U</div>
+        <div class="category-card">
+          <div class="cat-header">
+            <div class="cat-title">カテゴリ</div>
+            <div class="cat-sub">改善したい分野をお選びください</div>
+          </div>
+          <div class="cat-buttons">
+            <button class="cat-btn" onclick="showCarousel('cost')">コスト削減</button>
+            <button class="cat-btn" onclick="showCarousel('risk')">リスク回避</button>
+            <button class="cat-btn" onclick="showCarousel('flow')">フロー改善</button>
+          </div>
         </div>
         <div class="msg-time">16:15</div>
       </div>
