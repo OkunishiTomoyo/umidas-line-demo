@@ -562,7 +562,7 @@ function sendToLine() {
   if (isDemo) {
     // デモモード: LINEデモ画面に結果を持って戻る
     const text = encodeURIComponent(window._lineResultText || '');
-    window.location.href = 'line-demo.html?result=' + text;
+    window.location.href = 'https://okunishitomoyo.github.io/umidas-line-demo/line-demo.html?result=' + text;
   } else {
     // 本番: LINE公式トークに送信
     const text = encodeURIComponent(window._lineResultText || '鉄壁診断を受けました');
@@ -572,7 +572,7 @@ function sendToLine() {
 
 function backToLine() {
   if (isDemo) {
-    window.location.href = 'line-demo.html';
+    window.location.href = 'https://okunishitomoyo.github.io/umidas-line-demo/line-demo.html';
   } else {
     window.location.href = 'https://lin.ee/T0mwfPR';
   }
