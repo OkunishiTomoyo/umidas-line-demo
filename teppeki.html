@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>鉄壁診断 | UMIDAS</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@600;700&family=Noto+Sans+JP:wght@400;500;600;700;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: linear-gradient(180deg, #f8fbff, #e8f2ff);
+    min-height: 100vh;
+    color: #333;
+  }
+
+  /* ヘッダー */
+  .header {
+    background: linear-gradient(135deg, #1A6CB5, #0E4F8C);
+    padding: 40px 20px 32px;
+    text-align: center;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+  .header > * { position: relative; z-index: 1; }
+  .header .logo { font-family: 'Quicksand'; font-weight: 700; font-size: 14px; letter-spacing: 3px; color: rgba(255,255,255,0.6); margin-bottom: 12px; }
+  .header h1 { font-size: 32px; font-weight: 900; letter-spacing: 4px; margin-bottom: 8px; }
+  .header .shield { font-size: 48px; margin-bottom: 8px; }
+  .header p { font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.6; }
+
+  /* コンテナ */
+  .container { max-width: 600px; margin: 0 auto; padding: 20px 16px 40px; }
+
+  /* 説明 */
+  .intro {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    line-height: 1.8;
+    font-size: 14px;
+    color: #555;
+  }
+  .intro strong { color: #1A6CB5; }
+
+  /* プログレスバー */
+  .progress-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #fff;
+    padding: 12px 16px;
+    border-bottom: 1px solid #eee;
+    margin: 0 -16px;
+  }
+  .progress-track {
+    height: 6px;
+    background: #e8e8e8;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #B0DFEF, #1A6CB5);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+  .progress-text {
+    font-size: 12px;
+    color: #999;
+    margin-top: 4px;
+    text-align: right;
+  }
+
+  /* 質問カード */
+  .question-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    border-left: 4px solid #B0DFEF;
+    transition: border-color 0.3s;
+  }
+  .question-card.answered-yes { border-left-color: #4CAF50; }
+  .question-card.answered-no { border-left-color: #ff6b6b; }
+  .question-card .q-number {
+    font-family: 'Quicksand';
+    font-weight: 700;
+    font-size: 13px;
+    color: #B0DFEF;
+    margin-bottom: 6px;
+    letter-spacing: 2px;
+  }
+  .question-card .q-category {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
+  .cat-cost { background: rgba(176,223,239,0.2); color: #1A6CB5; }
+  .cat-risk { background: rgba(26,108,181,0.08); color: #0E4F8C; }
+  .question-card .q-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .question-card .q-hint {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+  .btn-group {
+    display: flex;
+    gap: 12px;
+  }
+  .btn-answer {
+    flex: 1;
+    padding: 14px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    background: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    color: #888;
+  }
+  .btn-answer:hover { border-color: #1A6CB5; color: #1A6CB5; }
+  .btn-answer.selected-yes { border-color: #4CAF50; background: #f0faf0; color: #4CAF50; }
+  .btn-answer.selected-no { border-color: #ff6b6b; background: #fff5f5; color: #ff6b6b; }
+
+  /* 送信ボタン */
+  .submit-btn {
+    display: block;
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(135deg, #6CBCE0, #1A6CB5);
+    border: none;
+    border-radius: 14px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    cursor: pointer;
+    margin-top: 24px;
+    box-shadow: 0 8px 24px rgba(26,108,181,0.25);
+    transition: opacity 0.2s;
+  }
+  .submit-btn:hover { opacity: 0.9; }
+  .submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* 結果画面 */
+  .result-section { display: none; }
+  .result-header {
+    background: linear-gradient(135deg, #1A6CB5, #0E4F8C);
+    border-radius: 20px;
+    padding: 36px 24px;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 24px;
+  }
+  .result-header .score-label { font-size: 14px; color: rgba(255,255,255,0.6); letter-spacing: 3px; margin-bottom: 8px; }
+  .result-header .score-number {
+    font-family: 'Quicksand';
+    font-weight: 700;
+    font-size: 80px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .result-header .score-max { font-size: 16px; color: rgba(255,255,255,0.5); }
+  .result-header .score-rank {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 8px 24px;
+    border-radius: 20px;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 3px;
+  }
+  .rank-s { background: #FFD700; color: #333; }
+  .rank-a { background: #4CAF50; color: #fff; }
+  .rank-b { background: #FF9800; color: #fff; }
+  .rank-c { background: #f44336; color: #fff; }
+
+  .result-meter {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .meter-bar {
+    height: 14px;
+    background: #eee;
+    border-radius: 7px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .meter-fill {
+    height: 100%;
+    border-radius: 7px;
+    transition: width 1s ease;
+  }
+  .meter-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #999;
+  }
+
+  /* 弱点リスト */
+  .weakness-section {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .weakness-section h3 {
+    font-size: 18px;
+    color: #1A6CB5;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .weakness-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .weakness-item:last-child { border-bottom: none; }
+  .weakness-icon {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, #ff6b6b22, #ff6b6b11);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 18px;
+  }
+  .weakness-text { flex: 1; }
+  .weakness-text .w-title { font-size: 14px; font-weight: 600; color: #333; margin-bottom: 2px; }
+  .weakness-text .w-solution { font-size: 12px; color: #1A6CB5; font-weight: 500; }
+  .weakness-text .w-company { font-size: 11px; color: #999; margin-top: 2px; }
+
+  .cta-box {
+    background: linear-gradient(135deg, #1A6CB5, #0E4F8C);
+    border-radius: 16px;
+    padding: 28px 24px;
+    text-align: center;
+    color: #fff;
+  }
+  .cta-box h3 { font-size: 20px; margin-bottom: 8px; letter-spacing: 2px; }
+  .cta-box p { font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 20px; line-height: 1.6; }
+  .cta-btn {
+    display: inline-block;
+    padding: 14px 40px;
+    background: #fff;
+    color: #1A6CB5;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-decoration: none;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  }
+</style>
+</head>
+<body>
+
+<!-- ヘッダー -->
+<div class="header">
+  <div class="logo">UMIDAS</div>
+  <div class="shield">🛡️</div>
+  <h1>鉄壁診断</h1>
+  <p>あなたの会社の経営基盤は盤石ですか？<br>18の質問で脆弱性を診断します</p>
+</div>
+
+<div class="container">
+
+  <!-- 説明 -->
+  <div class="intro" id="intro">
+    この診断では、<strong>コスト最適化</strong>と<strong>リスク対策</strong>の2つの観点から、企業の経営基盤の強度を数値化します。<br><br>
+    各質問に「はい / いいえ」でお答えください。<br>
+    診断結果に基づき、<strong>専門チームが最適な改善策</strong>をご提案します。<br><br>
+    <strong>所要時間：約3分</strong>
+  </div>
+
+  <!-- 質問セクション -->
+  <div id="quiz-section">
+    <div class="progress-bar">
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+      <div class="progress-text" id="progress-text">0 / 18</div>
+    </div>
+
+    <div id="questions"></div>
+
+    <button class="submit-btn" id="submit-btn" disabled onclick="showResult()">診断結果を見る</button>
+  </div>
+
+  <!-- 結果セクション -->
+  <div class="result-section" id="result-section">
+    <div class="result-header">
+      <div class="score-label">あなたの経営基盤スコア</div>
+      <div class="score-number" id="score-number">0</div>
+      <div class="score-max">/ 100 点</div>
+      <div class="score-rank" id="score-rank">-</div>
+    </div>
+
+    <div class="result-meter">
+      <div class="meter-bar"><div class="meter-fill" id="meter-fill" style="width:0%;"></div></div>
+      <div class="meter-labels">
+        <span>危険 0</span><span>要注意 40</span><span>標準 60</span><span>堅実 80</span><span>鉄壁 100</span>
+      </div>
+    </div>
+
+    <div class="weakness-section" id="weakness-section">
+      <h3>⚠️ 改善が必要な項目</h3>
+      <div id="weakness-list"></div>
+    </div>
+
+    <div class="cta-box">
+      <h3>無料で改善策をご提案</h3>
+      <p>診断結果に基づき、各分野の専門企業から<br>最適な改善プランをご提案いたします。</p>
+      <a href="https://lin.ee/T0mwfPR" class="cta-btn">LINEで相談する</a>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  // コスト削減系
+  {
+    q: "新規顧客の獲得に、効率的なリード獲得の仕組みがありますか？",
+    hint: "テレアポや飛び込み以外に、決裁者に直接アプローチできる手段があるか",
+    cat: "cost", company: "ApoLink / SCORE X", solution: "リード獲得プラットフォームの導入"
+  },
+  {
+    q: "複合機（コピー機）の印刷コストを過去1年以内に見直しましたか？",
+    hint: "カウンター料金やリース料金を他社と比較していますか",
+    cat: "cost", company: "バリューイノベーション", solution: "複合機コストの最適化提案"
+  },
+  {
+    q: "食材・食品の仕入れコストを定期的に見直していますか？",
+    hint: "飲食店・食品関連企業の場合、仕入れ先の比較検討を行っているか",
+    cat: "cost", company: "月兎ソース", solution: "食品仕入れコストの最適化"
+  },
+  {
+    q: "損害保険の契約内容を過去2年以内に見直しましたか？",
+    hint: "火災保険・賠償責任保険等の補償内容と保険料が適正か確認していますか",
+    cat: "cost", company: "エクセルリンク / GOEN", solution: "損害保険プランの最適化"
+  },
+  {
+    q: "オフィス用品・消耗品の購入コストを最適化していますか？",
+    hint: "文房具やコピー用紙などを最安値で購入できる仕組みがあるか",
+    cat: "cost", company: "ナナ文具（ASKUL代理店）", solution: "オフィス用品の調達コスト削減"
+  },
+  {
+    q: "物流・輸送・貿易のコストを定期的に見直していますか？",
+    hint: "配送料や通関費用などを他社と比較検討していますか",
+    cat: "cost", company: "Sanyo Logistics", solution: "物流・貿易コストの最適化"
+  },
+  {
+    q: "店舗やサービスの集客に、効果的なWeb施策を導入していますか？",
+    hint: "MEO対策・口コミ管理・Web広告など、デジタル集客ができていますか",
+    cat: "cost", company: "y-Doc", solution: "飲食店・店舗のデジタル集客支援"
+  },
+  {
+    q: "採用活動において、効率的な母集団形成の手段がありますか？",
+    hint: "求人媒体の費用対効果を把握し、ターゲットに合った採用チャネルがあるか",
+    cat: "cost", company: "ヒトミー", solution: "採用プラットフォームの最適化"
+  },
+  {
+    q: "オフィスや店舗の家賃を過去3年以内に交渉・見直ししましたか？",
+    hint: "賃料相場と比較して適正な賃料を支払っているか把握していますか",
+    cat: "cost", company: "アクトプロ", solution: "家賃の適正化コンサルティング"
+  },
+  {
+    q: "電力会社の契約を見直し、最適な電力プランを選択していますか？",
+    hint: "大手電力や新電力の比較検討を行いましたか",
+    cat: "cost", company: "アクトプロ", solution: "電力コストの削減提案"
+  },
+  {
+    q: "顧客管理（CRM）を効率的に行えるシステムを導入していますか？",
+    hint: "顧客情報や営業進捗をExcelではなく、専用システムで管理しているか",
+    cat: "cost", company: "Aitane", solution: "AI搭載CRMの導入"
+  },
+  {
+    q: "海外からの資材・原材料の調達ルートを最適化していますか？",
+    hint: "中間マージンの削減や、より有利な調達先の開拓ができているか",
+    cat: "cost", company: "日本国際貿易センター", solution: "国際調達ルートの最適化"
+  },
+  // リスク回避系
+  {
+    q: "自社名でネット検索した際に、ネガティブな情報が表示されていませんか？",
+    hint: "「〇〇会社 やばい」「〇〇会社 評判」などで悪い情報が出ていないか確認していますか",
+    cat: "risk", company: "AIDホールディングス", solution: "風評被害モニタリング・対策"
+  },
+  {
+    q: "労務トラブル（残業・ハラスメント・退職等）への相談体制がありますか？",
+    hint: "社労士や労務の専門家にすぐ相談できる体制が整っていますか",
+    cat: "risk", company: "経営トータルサポート", solution: "社労士による労務管理サポート"
+  },
+  {
+    q: "情報セキュリティ対策（ウイルス・不正アクセス・情報漏洩）は万全ですか？",
+    hint: "セキュリティソフトの導入だけでなく、社内ルールや教育が整備されているか",
+    cat: "risk", company: "カスタマークラウド", solution: "セキュリティシステムの構築"
+  },
+  {
+    q: "税務リスクに対して、定期的に専門家（税理士）のチェックを受けていますか？",
+    hint: "節税対策や税務調査への備えが十分にできていますか",
+    cat: "risk", company: "EXE Partnerz", solution: "税務コンサルティング"
+  },
+  {
+    q: "取引先の信用調査を行い、売掛金の未回収リスクに備えていますか？",
+    hint: "新規取引先の与信管理や、売掛金の保証サービスを利用していますか",
+    cat: "risk", company: "アラームボックス", solution: "AI与信管理・売掛金保証"
+  },
+  {
+    q: "上記すべてを横断的に見直す「経営基盤の定期点検」を実施していますか？",
+    hint: "コスト・リスクの総合的な見直しを年1回以上行っていますか",
+    cat: "risk", company: "UMIDAS", solution: "経営基盤の総合診断・改善提案"
+  },
+];
+
+const answers = new Array(questions.length).fill(null);
+
+// 質問カード生成
+const qContainer = document.getElementById('questions');
+questions.forEach((q, i) => {
+  const catClass = q.cat === 'cost' ? 'cat-cost' : 'cat-risk';
+  const catLabel = q.cat === 'cost' ? 'コスト削減' : 'リスク回避';
+  qContainer.innerHTML += `
+    <div class="question-card" id="qcard-${i}">
+      <div class="q-number">Q${i+1}</div>
+      <span class="q-category ${catClass}">${catLabel}</span>
+      <div class="q-text">${q.q}</div>
+      <div class="q-hint">${q.hint}</div>
+      <div class="btn-group">
+        <button class="btn-answer" id="btn-${i}-yes" onclick="answer(${i}, true)">はい ✓</button>
+        <button class="btn-answer" id="btn-${i}-no" onclick="answer(${i}, false)">いいえ ✗</button>
+      </div>
+    </div>`;
+});
+
+function answer(idx, val) {
+  answers[idx] = val;
+  // ボタンUI
+  document.getElementById(`btn-${idx}-yes`).className = 'btn-answer' + (val ? ' selected-yes' : '');
+  document.getElementById(`btn-${idx}-no`).className = 'btn-answer' + (!val ? ' selected-no' : '');
+  // カード色
+  const card = document.getElementById(`qcard-${idx}`);
+  card.className = 'question-card ' + (val ? 'answered-yes' : 'answered-no');
+  // プログレス
+  const answered = answers.filter(a => a !== null).length;
+  document.getElementById('progress-fill').style.width = (answered / questions.length * 100) + '%';
+  document.getElementById('progress-text').textContent = `${answered} / ${questions.length}`;
+  // 送信ボタン
+  document.getElementById('submit-btn').disabled = answered < questions.length;
+}
+
+function showResult() {
+  const yesCount = answers.filter(a => a === true).length;
+  const score = Math.round(yesCount / questions.length * 100);
+
+  // ランク
+  let rank, rankClass;
+  if (score >= 90) { rank = 'S 鉄壁'; rankClass = 'rank-s'; }
+  else if (score >= 70) { rank = 'A 堅実'; rankClass = 'rank-a'; }
+  else if (score >= 50) { rank = 'B 要注意'; rankClass = 'rank-b'; }
+  else { rank = 'C 危険'; rankClass = 'rank-c'; }
+
+  // メーター色
+  let meterColor;
+  if (score >= 80) meterColor = 'linear-gradient(90deg, #4CAF50, #81C784)';
+  else if (score >= 60) meterColor = 'linear-gradient(90deg, #FF9800, #FFB74D)';
+  else meterColor = 'linear-gradient(90deg, #f44336, #ef5350)';
+
+  // 表示
+  document.getElementById('quiz-section').style.display = 'none';
+  document.getElementById('intro').style.display = 'none';
+  document.getElementById('result-section').style.display = 'block';
+
+  // アニメーション
+  setTimeout(() => {
+    document.getElementById('score-number').textContent = score;
+    document.getElementById('score-rank').textContent = rank;
+    document.getElementById('score-rank').className = 'score-rank ' + rankClass;
+    document.getElementById('meter-fill').style.width = score + '%';
+    document.getElementById('meter-fill').style.background = meterColor;
+  }, 200);
+
+  // 弱点リスト
+  const weakList = document.getElementById('weakness-list');
+  weakList.innerHTML = '';
+  questions.forEach((q, i) => {
+    if (answers[i] === false) {
+      weakList.innerHTML += `
+        <div class="weakness-item">
+          <div class="weakness-icon">⚠️</div>
+          <div class="weakness-text">
+            <div class="w-title">${q.q.replace(/ますか？|ていますか？|いませんか？/g, '').substring(0, 30)}...</div>
+            <div class="w-solution">→ ${q.solution}</div>
+            <div class="w-company">対応企業: ${q.company}</div>
+          </div>
+        </div>`;
+    }
+  });
+
+  if (weakList.innerHTML === '') {
+    weakList.innerHTML = '<div style="text-align:center;padding:20px;color:#4CAF50;font-weight:700;">すべての項目をクリアしています！素晴らしい経営基盤です。</div>';
+  }
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+</body>
+</html>
