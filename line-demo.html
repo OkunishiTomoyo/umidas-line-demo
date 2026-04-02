@@ -260,7 +260,7 @@
             <div style="margin-top:10px;padding:10px;background:linear-gradient(135deg,rgba(26,108,181,0.05),rgba(176,223,239,0.1));border-radius:10px;border:1px solid rgba(26,108,181,0.15);">
               <div style="font-size:13px;font-weight:700;color:#1A6CB5;margin-bottom:4px;">🛡️ まずは鉄壁診断から</div>
               <div style="font-size:11px;color:#666;margin-bottom:6px;">経営基盤の弱点を3分で診断</div>
-              <a href="https://okunishitomoyo.github.io/umidas-line-demo/teppeki.html" target="_blank" style="display:block;text-align:center;padding:8px;background:linear-gradient(135deg,#6CBCE0,#1A6CB5);color:#fff;font-size:12px;font-weight:700;border-radius:8px;text-decoration:none;letter-spacing:2px;">鉄壁診断を受ける →</a>
+              <a href="teppeki.html?demo=1" style="display:block;text-align:center;padding:8px;background:linear-gradient(135deg,#6CBCE0,#1A6CB5);color:#fff;font-size:12px;font-weight:700;border-radius:8px;text-decoration:none;letter-spacing:2px;">鉄壁診断を受ける →</a>
             </div>
           </div>
           <div class="cat-buttons">
@@ -435,6 +435,40 @@ function showCarousel(type) {
   }
   setTimeout(() => chat.scrollTop = chat.scrollHeight, 100);
 }
+
+// 鉄壁診断の結果を受け取って表示
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const result = params.get('result');
+  if (result) {
+    // サービス一覧・カテゴリを表示
+    document.getElementById('category-section').classList.remove('hidden');
+
+    // 診断結果メッセージを追加
+    const resultDiv = document.createElement('div');
+    resultDiv.innerHTML = `
+      <div style="height:8px;"></div>
+      <div class="msg-row user">
+        <div class="msg-bubble" style="white-space:pre-line;font-size:12px;line-height:1.6;">${decodeURIComponent(result)}</div>
+        <div class="msg-time">16:15</div>
+      </div>
+      <div style="height:4px;"></div>
+      <div class="msg-label">UMIDAS</div>
+      <div class="msg-row">
+        <div class="msg-avatar">U</div>
+        <div class="msg-bubble">
+          鉄壁診断の結果を受け取りました！🛡️<br><br>
+          診断結果に基づき、最適な改善策をご提案させていただきます。<br><br>
+          担当者より改めてご連絡いたしますので、少々お待ちください。
+        </div>
+        <div class="msg-time">16:15</div>
+      </div>
+    `;
+    chat.insertBefore(resultDiv, chat.querySelector('[style="height:8px;"]'));
+
+    setTimeout(() => chat.scrollTop = chat.scrollHeight, 200);
+  }
+})();
 </script>
 
 </body>

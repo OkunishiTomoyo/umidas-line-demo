@@ -556,13 +556,26 @@ function showResult() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+const isDemo = new URLSearchParams(window.location.search).get('demo') === '1';
+
 function sendToLine() {
-  const text = encodeURIComponent(window._lineResultText || '鉄壁診断を受けました');
-  window.location.href = 'https://line.me/R/oaMessage/@179ztjdl/?' + text;
+  if (isDemo) {
+    // デモモード: LINEデモ画面に結果を持って戻る
+    const text = encodeURIComponent(window._lineResultText || '');
+    window.location.href = 'line-demo.html?result=' + text;
+  } else {
+    // 本番: LINE公式トークに送信
+    const text = encodeURIComponent(window._lineResultText || '鉄壁診断を受けました');
+    window.location.href = 'https://line.me/R/oaMessage/@179ztjdl/?' + text;
+  }
 }
 
 function backToLine() {
-  window.location.href = 'https://lin.ee/T0mwfPR';
+  if (isDemo) {
+    window.location.href = 'line-demo.html';
+  } else {
+    window.location.href = 'https://lin.ee/T0mwfPR';
+  }
 }
 </script>
 
