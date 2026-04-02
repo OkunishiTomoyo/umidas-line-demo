@@ -421,7 +421,7 @@ function onServiceClick() {
 }
 
 function showCarousel(type) {
-  // 全セクション非表示
+  // 既存セクション表示（通常フロー用）
   document.getElementById('cost-section').classList.add('hidden');
   document.getElementById('risk-section').classList.add('hidden');
   document.getElementById('flow-section').classList.add('hidden');
@@ -433,6 +433,42 @@ function showCarousel(type) {
   } else if (type === 'flow') {
     document.getElementById('flow-section').classList.remove('hidden');
   }
+
+  // 診断結果後のカルーセル（チャット末尾に動的追加）
+  const existing = document.getElementById('dynamic-carousel');
+  if (existing) existing.remove();
+
+  const div = document.createElement('div');
+  div.id = 'dynamic-carousel';
+
+  if (type === 'cost') {
+    div.innerHTML = `
+      <div style="height:4px;"></div>
+      <div class="msg-row user"><div class="msg-bubble">コスト削減</div><div class="msg-time">16:16</div></div>
+      <div style="height:4px;"></div>
+      <div class="msg-label">UMIDAS</div>
+      <div class="msg-row"><div class="msg-avatar">U</div><div class="msg-bubble"><strong>コスト削減</strong>のサービス一覧です。<br>横にスクロールしてご覧ください 👉</div><div class="msg-time">16:16</div></div>
+      <div class="scroll-hint">← スワイプ →</div>
+      <div class="carousel-container"><div class="carousel">${costData.map(makeCard).join('')}</div></div>`;
+  } else if (type === 'risk') {
+    div.innerHTML = `
+      <div style="height:4px;"></div>
+      <div class="msg-row user"><div class="msg-bubble">リスク回避</div><div class="msg-time">16:16</div></div>
+      <div style="height:4px;"></div>
+      <div class="msg-label">UMIDAS</div>
+      <div class="msg-row"><div class="msg-avatar">U</div><div class="msg-bubble"><strong>リスク回避</strong>のサービス一覧です 🛡️<br>横にスクロールしてご覧ください</div><div class="msg-time">16:16</div></div>
+      <div class="scroll-hint">← スワイプ →</div>
+      <div class="carousel-container"><div class="carousel">${riskData.map(makeCard).join('')}</div></div>`;
+  } else if (type === 'flow') {
+    div.innerHTML = `
+      <div style="height:4px;"></div>
+      <div class="msg-row user"><div class="msg-bubble">フロー改善</div><div class="msg-time">16:16</div></div>
+      <div style="height:4px;"></div>
+      <div class="msg-label">UMIDAS</div>
+      <div class="msg-row"><div class="msg-avatar">U</div><div class="msg-bubble"><strong>フロー改善</strong>のサービスは現在準備中です 🔧<br>近日公開予定ですのでお楽しみに！</div><div class="msg-time">16:16</div></div>`;
+  }
+
+  chat.appendChild(div);
   setTimeout(() => chat.scrollTop = chat.scrollHeight, 100);
 }
 
