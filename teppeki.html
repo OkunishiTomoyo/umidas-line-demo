@@ -547,11 +547,16 @@ function showResult() {
 
   // LINE送信用テキスト生成
   const weakItems = [];
+  const weakCompanies = [];
   questions.forEach((q, i) => {
-    if (answers[i] === 'no') weakItems.push('・' + q.solution + '（' + q.company + '）');
+    if (answers[i] === 'no') {
+      weakItems.push('・' + q.solution + '（' + q.company + '）');
+      weakCompanies.push(q.company);
+    }
   });
   const lineText = `【鉄壁診断の結果】\nスコア: ${score}点 / 100点\nランク: ${rank}\n対象項目: ${applicable.length}問\n\n${weakItems.length > 0 ? '【改善が必要な項目】\n' + weakItems.join('\n') + '\n\n改善策のご提案をお願いします。' : 'すべての項目をクリアしました！'}`;
   window._lineResultText = lineText;
+  window._weakCompanies = weakCompanies;
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -560,9 +565,10 @@ const isDemo = new URLSearchParams(window.location.search).get('demo') === '1';
 
 function sendToLine() {
   if (isDemo) {
-    // デモモード: LINEデモ画面に結果を持って戻る
+    // デモモード: LINEデモ画面に結果+弱点企業を持って戻る
     const text = encodeURIComponent(window._lineResultText || '');
-    window.location.href = 'https://okunishitomoyo.github.io/umidas-line-demo/line-demo.html?result=' + text;
+    const companies = encodeURIComponent((window._weakCompanies || []).join('|'));
+    window.location.href = 'https://okunishitomoyo.github.io/umidas-line-demo/line-demo.html?result=' + text + '&companies=' + companies;
   } else {
     // 本番: LINE公式トークに送信
     const text = encodeURIComponent(window._lineResultText || '鉄壁診断を受けました');
