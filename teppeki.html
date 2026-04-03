@@ -465,7 +465,7 @@ questions.forEach((q, i) => {
       <div class="btn-group">
         <button class="btn-answer" id="btn-${i}-yes" onclick="answer(${i}, 'yes')">はい ✓</button>
         <button class="btn-answer" id="btn-${i}-no" onclick="answer(${i}, 'no')">いいえ ✗</button>
-        <button class="btn-answer" id="btn-${i}-na" onclick="answer(${i}, 'na')">関係なし</button>
+        <button class="btn-answer" id="btn-${i}-na" onclick="answer(${i}, 'na')">対象外</button>
       </div>
     </div>`;
 });
@@ -521,7 +521,7 @@ function showResult() {
     document.getElementById('meter-fill').style.width = score + '%';
     document.getElementById('meter-fill').style.background = meterColor;
     document.getElementById('score-detail').textContent =
-      `対象: ${applicable.length}項目 / はい: ${yesCount} / いいえ: ${noCount} / 関係なし: ${naCount}`;
+      `対象: ${applicable.length}項目 / はい: ${yesCount} / いいえ: ${noCount} / 対象外: ${naCount}`;
   }, 200);
 
   // 弱点リスト
