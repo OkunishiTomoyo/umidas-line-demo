@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #999;
+  }
+  .banner {
+    width: 1040px;
+    height: 585px;
+    background: linear-gradient(160deg, #ffffff 0%, #f0f7ff 30%, #e8f2ff 60%, #f5faff 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+  }
+
+  /* グリッドライン */
+  .grid {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+      linear-gradient(rgba(70,160,230,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(70,160,230,0.06) 1px, transparent 1px);
+    background-size: 60px 60px;
+    z-index: 0;
+  }
+
+  /* パースペクティブグリッド（下部） */
+  .perspective-grid {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 180px;
+    background:
+      linear-gradient(to top, rgba(70,160,230,0.08), transparent),
+      linear-gradient(rgba(70,160,230,0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(70,160,230,0.08) 1px, transparent 1px);
+    background-size: 100% 100%, 80px 40px, 80px 40px;
+    transform: perspective(400px) rotateX(45deg);
+    transform-origin: bottom center;
+    z-index: 0;
+  }
+
+  /* 光のライン */
+  .glow-line-1 {
+    position: absolute;
+    top: 120px;
+    left: -100px;
+    width: 500px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(70,170,235,0.25), rgba(40,140,220,0.4), rgba(70,170,235,0.25), transparent);
+    transform: rotate(-15deg);
+    z-index: 1;
+  }
+  .glow-line-2 {
+    position: absolute;
+    top: 180px;
+    right: -100px;
+    width: 400px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(70,170,235,0.2), rgba(40,140,220,0.35), rgba(70,170,235,0.2), transparent);
+    transform: rotate(12deg);
+    z-index: 1;
+  }
+
+  /* 光のドット */
+  .dot {
+    position: absolute;
+    border-radius: 50%;
+    z-index: 1;
+  }
+  .dot-1 { width: 4px; height: 4px; background: rgba(50,160,230,0.5); top: 80px; left: 180px; box-shadow: 0 0 8px rgba(50,160,230,0.3); }
+  .dot-2 { width: 3px; height: 3px; background: rgba(40,140,220,0.4); top: 150px; left: 320px; box-shadow: 0 0 6px rgba(40,140,220,0.3); }
+  .dot-3 { width: 5px; height: 5px; background: rgba(50,160,230,0.45); top: 100px; right: 250px; box-shadow: 0 0 10px rgba(50,160,230,0.3); }
+  .dot-4 { width: 3px; height: 3px; background: rgba(40,140,220,0.35); top: 200px; right: 150px; box-shadow: 0 0 6px rgba(40,140,220,0.2); }
+  .dot-5 { width: 4px; height: 4px; background: rgba(50,160,230,0.4); bottom: 180px; left: 120px; box-shadow: 0 0 8px rgba(50,160,230,0.3); }
+  .dot-6 { width: 3px; height: 3px; background: rgba(40,140,220,0.5); top: 60px; right: 400px; box-shadow: 0 0 6px rgba(40,140,220,0.3); }
+  .dot-7 { width: 4px; height: 4px; background: rgba(50,160,230,0.4); bottom: 220px; right: 350px; box-shadow: 0 0 8px rgba(50,160,230,0.3); }
+
+  /* 六角形 */
+  .hex {
+    position: absolute;
+    border: 1px solid rgba(70,160,230,0.12);
+    z-index: 1;
+    transform: rotate(45deg);
+    border-radius: 4px;
+  }
+  .hex-1 { width: 50px; height: 50px; top: 60px; left: 80px; }
+  .hex-2 { width: 35px; height: 35px; top: 40px; right: 120px; border-color: rgba(70,160,230,0.08); }
+  .hex-3 { width: 40px; height: 40px; bottom: 100px; left: 200px; border-color: rgba(70,160,230,0.06); }
+  .hex-4 { width: 55px; height: 55px; bottom: 140px; right: 80px; border-color: rgba(70,160,230,0.10); }
+
+  /* グロー */
+  .glow-circle {
+    position: absolute;
+    border-radius: 50%;
+    z-index: 0;
+  }
+  .glow-circle-1 {
+    width: 300px; height: 300px;
+    top: -80px; right: -60px;
+    background: radial-gradient(circle, rgba(70,170,235,0.08), transparent 70%);
+  }
+  .glow-circle-2 {
+    width: 250px; height: 250px;
+    bottom: -50px; left: -30px;
+    background: radial-gradient(circle, rgba(40,140,220,0.06), transparent 70%);
+  }
+
+  .content {
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .accent-line {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #5bc0f5, #2888dc);
+    margin-bottom: 16px;
+    border-radius: 2px;
+  }
+  .sub-title {
+    background: linear-gradient(90deg, #5bc0f5, #2888dc, #1a6cb5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 32px;
+    letter-spacing: 10px;
+    margin-bottom: 14px;
+    font-weight: 600;
+  }
+  .main-title {
+    background: linear-gradient(90deg, #1a6cb5, #2080d0, #1a6cb5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 60px;
+    font-weight: 700;
+    letter-spacing: 8px;
+    margin-bottom: 20px;
+  }
+  .divider {
+    width: 160px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(70,160,230,0.4), transparent);
+    margin-bottom: 20px;
+  }
+  .description {
+    background: linear-gradient(90deg, #4aa8e6, #2080d0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 32px;
+    letter-spacing: 5px;
+    font-weight: 500;
+  }
+  .badge {
+    position: absolute;
+    top: 190px;
+    right: 60px;
+    background: linear-gradient(135deg, rgba(91,192,245,0.12), rgba(40,136,220,0.12));
+    border: 1px solid rgba(70,160,230,0.3);
+    background-clip: padding-box;
+    font-size: 12px;
+    padding: 6px 16px;
+    border-radius: 20px;
+    letter-spacing: 2px;
+    z-index: 5;
+    color: #2888dc;
+  }
+  .logo-area {
+    position: absolute;
+    bottom: 20px;
+    right: 24px;
+    z-index: 5;
+  }
+  .logo-text {
+    background: linear-gradient(90deg, #5bc0f5, #2888dc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 11px;
+    letter-spacing: 2px;
+    opacity: 0.5;
+  }
+</style>
+</head>
+<body>
+  <div class="banner">
+    <div class="grid"></div>
+    <div class="perspective-grid"></div>
+    <div class="glow-line-1"></div>
+    <div class="glow-line-2"></div>
+    <div class="glow-circle glow-circle-1"></div>
+    <div class="glow-circle glow-circle-2"></div>
+
+    <div class="dot dot-1"></div>
+    <div class="dot dot-2"></div>
+    <div class="dot dot-3"></div>
+    <div class="dot dot-4"></div>
+    <div class="dot dot-5"></div>
+    <div class="dot dot-6"></div>
+    <div class="dot dot-7"></div>
+
+    <div class="hex hex-1"></div>
+    <div class="hex hex-2"></div>
+    <div class="hex hex-3"></div>
+    <div class="hex hex-4"></div>
+
+    <div class="content">
+      <div class="sub-title">UMIDAS</div>
+      <div class="main-title">コスト削減の総合窓口</div>
+      <div class="divider"></div>
+      <div class="description">業界の裏側とUMIDASの価値</div>
+    </div>
+
+    <div class="logo-area">
+      <div class="logo-text">Powered by UMIDAS</div>
+    </div>
+  </div>
+</body>
+</html>

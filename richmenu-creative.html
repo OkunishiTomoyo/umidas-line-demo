@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #222;
+    font-family: 'Noto Sans JP', sans-serif;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+  }
+  h2 { color: #ccc; font-size: 16px; letter-spacing: 2px; }
+  .wrap { transform: scale(0.32); transform-origin: top center; height: 540px; }
+</style>
+</head>
+<body>
+
+<!-- ===== デザイン1: 波紋が広がるワンキャンバス ===== -->
+<h2>デザイン1: 波紋キャンバス</h2>
+<div class="wrap">
+<div style="width:2500px;height:1686px;background:linear-gradient(160deg,#0a1628,#0d2240,#0a1c38);position:relative;overflow:hidden;font-family:'Noto Sans JP',sans-serif;">
+  <!-- 波紋エフェクト（中央から広がる） -->
+  <div style="position:absolute;top:50%;left:40%;transform:translate(-50%,-50%);">
+    <div style="width:400px;height:160px;border:2px solid rgba(100,180,255,0.08);border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+    <div style="width:700px;height:280px;border:2px solid rgba(100,180,255,0.06);border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+    <div style="width:1100px;height:440px;border:2px solid rgba(100,180,255,0.04);border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+    <div style="width:1600px;height:640px;border:1px solid rgba(100,180,255,0.03);border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+    <div style="width:2200px;height:880px;border:1px solid rgba(100,180,255,0.02);border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+  </div>
+  <!-- グリッド -->
+  <div style="position:absolute;top:0;left:0;right:0;bottom:0;background-image:linear-gradient(rgba(70,160,230,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(70,160,230,0.04) 1px,transparent 1px);background-size:60px 60px;"></div>
+  <!-- 区切り線（見えない） -->
+  <div style="position:absolute;top:0;left:0;width:1666px;height:843px;border-right:1px solid rgba(100,180,255,0.06);border-bottom:1px solid rgba(100,180,255,0.06);"></div>
+  <!-- UMIDASサービス（左上） -->
+  <div style="position:absolute;top:80px;left:120px;">
+    <div style="font-family:'Quicksand';font-weight:700;font-size:88px;letter-spacing:8px;background:linear-gradient(90deg,#7EC8E3,#3898D0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">UMIDAS</div>
+    <div style="font-size:52px;font-weight:700;color:#5bbef5;letter-spacing:10px;margin-top:8px;">サービス一覧</div>
+    <div style="font-size:28px;color:rgba(91,190,245,0.4);margin-top:16px;letter-spacing:3px;">コスト削減の厳選サービスをご覧ください</div>
+    <svg style="margin-top:40px;opacity:0.6;" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#5bbef5" stroke-width="1.5"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+  </div>
+  <!-- My Page（右・中央寄り） -->
+  <div style="position:absolute;top:50%;right:120px;transform:translateY(-50%);text-align:center;">
+    <div style="width:160px;height:160px;border:2px solid rgba(91,190,245,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 30px;">
+      <svg width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#5bbef5" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    </div>
+    <div style="font-family:'Quicksand';font-weight:700;font-size:64px;color:#5bbef5;">My Page</div>
+    <div style="font-size:28px;color:rgba(91,190,245,0.4);margin-top:8px;">マイページ</div>
+  </div>
+  <!-- コラボ動画（左下） -->
+  <div style="position:absolute;bottom:120px;left:200px;text-align:center;">
+    <svg width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#5bbef5" stroke-width="1.5" style="margin-bottom:20px;"><polygon points="5,3 19,12 5,21"/></svg>
+    <div style="font-size:52px;font-weight:700;color:#8ec5f6;letter-spacing:4px;">コラボ動画</div>
+    <div style="font-size:24px;color:rgba(142,197,246,0.4);margin-top:8px;">限定コンテンツ</div>
+  </div>
+  <!-- 相談AI（中央下） -->
+  <div style="position:absolute;bottom:120px;left:50%;transform:translateX(-30%);text-align:center;">
+    <svg width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#5bbef5" stroke-width="1.5" style="margin-bottom:20px;"><path d="M12 2a7 7 0 0 1 7 7c0 3-2 5-4 6v2H9v-2c-2-1-4-3-4-6a7 7 0 0 1 7-7z"/><line x1="9" y1="21" x2="15" y2="21"/></svg>
+    <div style="font-size:52px;font-weight:700;color:#8ec5f6;letter-spacing:4px;">相談AI</div>
+    <div style="font-size:24px;color:rgba(142,197,246,0.4);margin-top:8px;">AIがお答えします</div>
+  </div>
+</div>
+</div>
+
+<!-- ===== デザイン2: 斜めスプリット ===== -->
+<h2>デザイン2: 斜めスプリット</h2>
+<div class="wrap">
+<div style="width:2500px;height:1686px;background:#f8fbff;position:relative;overflow:hidden;font-family:'Noto Sans JP',sans-serif;">
+  <!-- 斜めの青背景 -->
+  <div style="position:absolute;top:0;right:0;width:60%;height:100%;background:linear-gradient(135deg,#1A6CB5,#0E4F8C);clip-path:polygon(30% 0,100% 0,100% 100%,0% 100%);"></div>
+  <!-- ドット装飾 -->
+  <div style="position:absolute;top:0;left:0;right:0;bottom:0;background-image:radial-gradient(rgba(56,152,208,0.08) 1px,transparent 1px);background-size:30px 30px;"></div>
+  <!-- UMIDASサービス（左上） -->
+  <div style="position:absolute;top:100px;left:100px;">
+    <div style="font-family:'Quicksand';font-weight:700;font-size:88px;background:linear-gradient(90deg,#B0DFEF,#1A6CB5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">UMIDAS</div>
+    <div style="font-size:52px;font-weight:700;color:#1A6CB5;letter-spacing:8px;margin-top:12px;">サービス一覧</div>
+    <div style="width:120px;height:4px;background:linear-gradient(90deg,#B0DFEF,#1A6CB5);margin-top:24px;border-radius:2px;"></div>
+  </div>
+  <!-- コラボ動画（左下） -->
+  <div style="position:absolute;bottom:140px;left:100px;">
+    <div style="display:flex;align-items:center;gap:20px;">
+      <div style="width:80px;height:80px;background:linear-gradient(135deg,#B0DFEF,#3898D0);border-radius:20px;display:flex;align-items:center;justify-content:center;">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg>
+      </div>
+      <div>
+        <div style="font-size:48px;font-weight:700;color:#1A6CB5;">コラボ動画</div>
+        <div style="font-size:24px;color:#6CBCE0;">限定コンテンツ</div>
+      </div>
+    </div>
+  </div>
+  <!-- 相談AI（中央・斜め境界付近） -->
+  <div style="position:absolute;bottom:140px;left:850px;">
+    <div style="display:flex;align-items:center;gap:20px;">
+      <div style="width:80px;height:80px;background:linear-gradient(135deg,#3898D0,#0E4F8C);border-radius:20px;display:flex;align-items:center;justify-content:center;">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2a7 7 0 0 1 7 7c0 3-2 5-4 6v2H9v-2c-2-1-4-3-4-6a7 7 0 0 1 7-7z"/><line x1="9" y1="21" x2="15" y2="21"/></svg>
+      </div>
+      <div>
+        <div style="font-size:48px;font-weight:700;color:#fff;">相談AI</div>
+        <div style="font-size:24px;color:rgba(255,255,255,0.6);">AIがお答えします</div>
+      </div>
+    </div>
+  </div>
+  <!-- My Page（右・白文字） -->
+  <div style="position:absolute;top:50%;right:160px;transform:translateY(-50%);text-align:center;">
+    <div style="width:180px;height:180px;border:3px solid rgba(255,255,255,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 30px;">
+      <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    </div>
+    <div style="font-family:'Quicksand';font-weight:700;font-size:64px;color:#fff;">My Page</div>
+    <div style="font-size:28px;color:rgba(255,255,255,0.5);">マイページ</div>
+  </div>
+</div>
+</div>
+
+<!-- ===== デザイン3: フローティングカード ===== -->
+<h2>デザイン3: フローティングカード</h2>
+<div class="wrap">
+<div style="width:2500px;height:1686px;background:linear-gradient(135deg,#0d1b30,#162d50,#0d1b30);position:relative;overflow:hidden;font-family:'Noto Sans JP',sans-serif;">
+  <!-- パースペクティブグリッド -->
+  <div style="position:absolute;bottom:0;left:0;right:0;height:600px;background:linear-gradient(rgba(0,120,255,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(0,120,255,0.06) 1px,transparent 1px);background-size:80px 40px;transform:perspective(500px) rotateX(50deg);transform-origin:bottom;"></div>
+  <!-- 光のドット -->
+  <div style="position:absolute;top:200px;left:300px;width:6px;height:6px;background:rgba(91,190,245,0.6);border-radius:50%;box-shadow:0 0 12px rgba(91,190,245,0.4);"></div>
+  <div style="position:absolute;top:400px;right:500px;width:4px;height:4px;background:rgba(91,190,245,0.5);border-radius:50%;box-shadow:0 0 8px rgba(91,190,245,0.3);"></div>
+  <div style="position:absolute;top:150px;right:200px;width:5px;height:5px;background:rgba(91,190,245,0.4);border-radius:50%;box-shadow:0 0 10px rgba(91,190,245,0.3);"></div>
+  <!-- UMIDASサービス（大きなフローティングカード） -->
+  <div style="position:absolute;top:60px;left:60px;width:1580px;height:760px;background:rgba(255,255,255,0.04);border:1px solid rgba(100,180,255,0.12);border-radius:30px;backdrop-filter:blur(4px);display:flex;flex-direction:column;align-items:center;justify-content:center;">
+    <div style="font-family:'Quicksand';font-weight:700;font-size:96px;letter-spacing:8px;background:linear-gradient(90deg,#7EC8E3,#5bbef5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">UMIDAS</div>
+    <div style="font-size:56px;font-weight:700;color:rgba(91,190,245,0.8);letter-spacing:10px;margin-top:16px;">サービス一覧</div>
+    <div style="font-size:28px;color:rgba(91,190,245,0.35);margin-top:20px;">コスト削減の厳選サービスをご覧ください</div>
+  </div>
+  <!-- My Page（右側フローティング） -->
+  <div style="position:absolute;top:60px;right:60px;width:780px;height:1566px;background:rgba(255,255,255,0.03);border:1px solid rgba(100,180,255,0.1);border-radius:30px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+    <div style="width:150px;height:150px;border:2px solid rgba(91,190,245,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:30px;">
+      <svg width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="rgba(91,190,245,0.7)" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    </div>
+    <div style="font-family:'Quicksand';font-weight:700;font-size:60px;color:rgba(91,190,245,0.8);">My Page</div>
+    <div style="font-size:26px;color:rgba(91,190,245,0.35);margin-top:8px;">マイページ</div>
+  </div>
+  <!-- コラボ動画 -->
+  <div style="position:absolute;bottom:60px;left:60px;width:780px;height:760px;background:rgba(255,255,255,0.03);border:1px solid rgba(100,180,255,0.1);border-radius:30px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+    <svg width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="rgba(91,190,245,0.7)" stroke-width="1.5" style="margin-bottom:24px;"><polygon points="5,3 19,12 5,21"/></svg>
+    <div style="font-size:52px;font-weight:700;color:rgba(91,190,245,0.8);">コラボ動画</div>
+    <div style="font-size:24px;color:rgba(91,190,245,0.35);margin-top:8px;">限定コンテンツ</div>
+  </div>
+  <!-- 相談AI -->
+  <div style="position:absolute;bottom:60px;left:860px;width:780px;height:760px;background:rgba(255,255,255,0.03);border:1px solid rgba(100,180,255,0.1);border-radius:30px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+    <svg width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="rgba(91,190,245,0.7)" stroke-width="1.5" style="margin-bottom:24px;"><path d="M12 2a7 7 0 0 1 7 7c0 3-2 5-4 6v2H9v-2c-2-1-4-3-4-6a7 7 0 0 1 7-7z"/><line x1="9" y1="21" x2="15" y2="21"/></svg>
+    <div style="font-size:52px;font-weight:700;color:rgba(91,190,245,0.8);">相談AI</div>
+    <div style="font-size:24px;color:rgba(91,190,245,0.35);margin-top:8px;">AIがお答えします</div>
+  </div>
+</div>
+</div>
+
+<!-- ===== デザイン4: 大胆な中央ロゴ ===== -->
+<h2>デザイン4: 中央ロゴ+周囲メニュー</h2>
+<div class="wrap">
+<div style="width:2500px;height:1686px;background:linear-gradient(135deg,#f0f7ff,#e0eefa);position:relative;overflow:hidden;font-family:'Noto Sans JP',sans-serif;">
+  <!-- 背景グリッド -->
+  <div style="position:absolute;top:0;left:0;right:0;bottom:0;background-image:linear-gradient(rgba(56,152,208,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(56,152,208,0.04) 1px,transparent 1px);background-size:50px 50px;"></div>
+  <!-- 中央に大きなUMIDAS -->
+  <div style="position:absolute;top:50%;left:38%;transform:translate(-50%,-50%);text-align:center;opacity:0.06;">
+    <div style="font-family:'Quicksand';font-weight:700;font-size:300px;letter-spacing:20px;color:#1A6CB5;">UMIDAS</div>
+  </div>
+  <!-- サービス一覧（左上） -->
+  <div style="position:absolute;top:100px;left:80px;display:flex;align-items:center;gap:30px;">
+    <div style="width:120px;height:120px;background:linear-gradient(135deg,#B0DFEF,#3898D0);border-radius:28px;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(56,152,208,0.2);">
+      <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+    </div>
+    <div>
+      <div style="font-family:'Quicksand';font-weight:700;font-size:72px;background:linear-gradient(90deg,#B0DFEF,#1A6CB5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">UMIDAS</div>
+      <div style="font-size:44px;font-weight:700;color:#1A6CB5;letter-spacing:6px;">サービス一覧</div>
+    </div>
+  </div>
+  <!-- コラボ動画（左下） -->
+  <div style="position:absolute;bottom:140px;left:80px;display:flex;align-items:center;gap:30px;">
+    <div style="width:110px;height:110px;background:linear-gradient(135deg,#89CFF0,#3898D0);border-radius:24px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(56,152,208,0.18);">
+      <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg>
+    </div>
+    <div>
+      <div style="font-size:48px;font-weight:700;color:#1A6CB5;">コラボ動画</div>
+      <div style="font-size:24px;color:#6CBCE0;">限定コンテンツ</div>
+    </div>
+  </div>
+  <!-- 相談AI（中央下） -->
+  <div style="position:absolute;bottom:140px;left:820px;display:flex;align-items:center;gap:30px;">
+    <div style="width:110px;height:110px;background:linear-gradient(135deg,#6CBCE0,#0E4F8C);border-radius:24px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(14,79,140,0.18);">
+      <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2a7 7 0 0 1 7 7c0 3-2 5-4 6v2H9v-2c-2-1-4-3-4-6a7 7 0 0 1 7-7z"/><line x1="9" y1="21" x2="15" y2="21"/></svg>
+    </div>
+    <div>
+      <div style="font-size:48px;font-weight:700;color:#1A6CB5;">相談AI</div>
+      <div style="font-size:24px;color:#6CBCE0;">AIがお答えします</div>
+    </div>
+  </div>
+  <!-- My Page（右・縦帯） -->
+  <div style="position:absolute;top:0;right:0;width:833px;height:100%;background:linear-gradient(180deg,rgba(26,108,181,0.03),rgba(26,108,181,0.08));border-left:2px solid rgba(26,108,181,0.1);display:flex;flex-direction:column;align-items:center;justify-content:center;">
+    <div style="width:160px;height:160px;background:#fff;border:3px solid #B0DFEF;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:30px;box-shadow:0 8px 30px rgba(56,152,208,0.12);">
+      <svg width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#3898D0" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    </div>
+    <div style="font-family:'Quicksand';font-weight:700;font-size:64px;color:#1A6CB5;">My Page</div>
+    <div style="font-size:28px;color:#93bdd6;margin-top:8px;">マイページ</div>
+  </div>
+</div>
+</div>
+
+<!-- ===== デザイン5: ヘキサゴン近未来 ===== -->
+<h2>デザイン5: ヘキサゴン近未来</h2>
+<div class="wrap">
+<div style="width:2500px;height:1686px;background:linear-gradient(160deg,#060d1a,#0c1a30,#060d1a);position:relative;overflow:hidden;font-family:'Noto Sans JP',sans-serif;">
+  <!-- ヘキサゴンパターン -->
+  <svg style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.06;">
+    <pattern id="hex" width="100" height="115" patternUnits="userSpaceOnUse">
+      <polygon points="50,5 95,28 95,72 50,95 5,72 5,28" fill="none" stroke="#4aa8e6" stroke-width="1"/>
+    </pattern>
+    <rect width="100%" height="100%" fill="url(#hex)"/>
+  </svg>
+  <!-- 光のライン -->
+  <div style="position:absolute;top:420px;left:0;width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(74,168,230,0.2),rgba(74,168,230,0.4),rgba(74,168,230,0.2),transparent);"></div>
+  <div style="position:absolute;top:0;left:1666px;width:1px;height:100%;background:linear-gradient(180deg,transparent,rgba(74,168,230,0.15),rgba(74,168,230,0.3),rgba(74,168,230,0.15),transparent);"></div>
+  <!-- UMIDASサービス -->
+  <div style="position:absolute;top:120px;left:50%;transform:translateX(-65%);text-align:center;">
+    <div style="font-family:'Quicksand';font-weight:700;font-size:100px;letter-spacing:12px;background:linear-gradient(90deg,#4aa8e6,#8ed0f5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">UMIDAS</div>
+    <div style="font-size:52px;font-weight:600;color:rgba(142,208,245,0.7);letter-spacing:12px;margin-top:12px;">サ ー ビ ス 一 覧</div>
+  </div>
+  <!-- コラボ動画 -->
+  <div style="position:absolute;bottom:200px;left:200px;text-align:center;">
+    <div style="width:100px;height:100px;border:2px solid rgba(74,168,230,0.3);border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+      <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="rgba(142,208,245,0.8)" stroke-width="1.5"><polygon points="5,3 19,12 5,21"/></svg>
+    </div>
+    <div style="font-size:48px;font-weight:700;color:rgba(142,208,245,0.8);">コラボ動画</div>
+    <div style="font-size:22px;color:rgba(142,208,245,0.35);margin-top:8px;">限定コンテンツ</div>
+  </div>
+  <!-- 相談AI -->
+  <div style="position:absolute;bottom:200px;left:50%;transform:translateX(-30%);text-align:center;">
+    <div style="width:100px;height:100px;border:2px solid rgba(74,168,230,0.3);border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+      <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="rgba(142,208,245,0.8)" stroke-width="1.5"><path d="M12 2a7 7 0 0 1 7 7c0 3-2 5-4 6v2H9v-2c-2-1-4-3-4-6a7 7 0 0 1 7-7z"/><line x1="9" y1="21" x2="15" y2="21"/></svg>
+    </div>
+    <div style="font-size:48px;font-weight:700;color:rgba(142,208,245,0.8);">相談AI</div>
+    <div style="font-size:22px;color:rgba(142,208,245,0.35);margin-top:8px;">AIがお答えします</div>
+  </div>
+  <!-- My Page -->
+  <div style="position:absolute;top:50%;right:140px;transform:translateY(-50%);text-align:center;">
+    <div style="width:150px;height:150px;border:2px solid rgba(74,168,230,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;">
+      <svg width="65" height="65" viewBox="0 0 24 24" fill="none" stroke="rgba(142,208,245,0.7)" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    </div>
+    <div style="font-family:'Quicksand';font-weight:700;font-size:58px;color:rgba(142,208,245,0.8);">My Page</div>
+    <div style="font-size:24px;color:rgba(142,208,245,0.35);margin-top:8px;">マイページ</div>
+  </div>
+</div>
+</div>
+
+</body>
+</html>

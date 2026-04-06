@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #888;
+  }
+  .menu {
+    width: 2500px;
+    height: 1686px;
+    background: linear-gradient(160deg, #f8fbff 0%, #eef5fc 50%, #e6f0fa 100%);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 6px;
+    padding: 6px;
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+
+  .cell {
+    background: #ffffff;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cell::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+      linear-gradient(rgba(70,160,230,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(70,160,230,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+
+  /* UMIDASサービス（左上・2カラム分） */
+  .service {
+    grid-column: 1 / 3;
+    grid-row: 1;
+    background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
+  }
+  .service .icon {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, #B0DFEF, #3898D0);
+    border-radius: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 32px;
+    box-shadow: 0 8px 24px rgba(56,152,208,0.2);
+  }
+  .service .icon svg { width: 60px; height: 60px; }
+  .service .title {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 56px;
+    letter-spacing: 4px;
+    background: linear-gradient(90deg, #B0DFEF, #6CBCE0, #3898D0, #1A6CB5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+  .service .subtitle {
+    font-size: 36px;
+    font-weight: 600;
+    color: #1A6CB5;
+    letter-spacing: 6px;
+  }
+  .service .desc {
+    font-size: 24px;
+    color: #7aabcc;
+    margin-top: 16px;
+    letter-spacing: 2px;
+  }
+
+  /* My page（右・縦長・2行分） */
+  .mypage {
+    grid-column: 3;
+    grid-row: 1 / 3;
+    background: linear-gradient(135deg, #ffffff 0%, #f5faff 100%);
+  }
+  .mypage .icon {
+    width: 130px;
+    height: 130px;
+    background: linear-gradient(135deg, #6CBCE0, #1A6CB5);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 36px;
+    box-shadow: 0 8px 24px rgba(26,108,181,0.2);
+  }
+  .mypage .icon svg { width: 64px; height: 64px; }
+  .mypage .title {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 52px;
+    color: #1A6CB5;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+  .mypage .subtitle {
+    font-size: 28px;
+    color: #7aabcc;
+    letter-spacing: 2px;
+  }
+
+  /* コラボ動画（左下） */
+  .collab {
+    grid-column: 1;
+    grid-row: 2;
+    background: linear-gradient(135deg, #ffffff 0%, #f2f8fe 100%);
+  }
+  .collab .icon {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, #89CFF0, #3898D0);
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    box-shadow: 0 6px 20px rgba(56,152,208,0.18);
+  }
+  .collab .icon svg { width: 50px; height: 50px; }
+  .collab .title {
+    font-size: 38px;
+    font-weight: 700;
+    color: #1A6CB5;
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+  }
+  .collab .subtitle {
+    font-size: 22px;
+    color: #7aabcc;
+    letter-spacing: 2px;
+  }
+
+  /* UMIDASの相談AI（中央下） */
+  .ai {
+    grid-column: 2;
+    grid-row: 2;
+    background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
+  }
+  .ai .icon {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, #6CBCE0, #0E4F8C);
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    box-shadow: 0 6px 20px rgba(14,79,140,0.2);
+  }
+  .ai .icon svg { width: 50px; height: 50px; }
+  .ai .title {
+    font-size: 34px;
+    font-weight: 700;
+    color: #1A6CB5;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+  .ai .title-sub {
+    font-size: 42px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #3898D0, #0E4F8C);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+  .ai .subtitle {
+    font-size: 22px;
+    color: #7aabcc;
+    letter-spacing: 2px;
+  }
+</style>
+</head>
+<body>
+  <div class="menu">
+
+    <!-- UMIDASサービス（左上・2カラム分） -->
+    <div class="cell service">
+      <div class="icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round">
+          <path d="M4 6h16M4 12h16M4 18h10"/>
+        </svg>
+      </div>
+      <div class="title">UMIDAS</div>
+      <div class="subtitle">サービス一覧</div>
+      <div class="desc">コスト削減の厳選サービスをご覧ください</div>
+    </div>
+
+    <!-- My page（右・縦長） -->
+    <div class="cell mypage">
+      <div class="icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+      </div>
+      <div class="title">My Page</div>
+      <div class="subtitle">マイページ</div>
+    </div>
+
+    <!-- コラボ動画（左下） -->
+    <div class="cell collab">
+      <div class="icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round">
+          <polygon points="5,3 19,12 5,21"/>
+        </svg>
+      </div>
+      <div class="title">コラボ動画</div>
+      <div class="subtitle">限定コンテンツ</div>
+    </div>
+
+    <!-- UMIDASの相談AI（中央下） -->
+    <div class="cell ai">
+      <div class="icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round">
+          <path d="M12 2a7 7 0 0 1 7 7c0 3-2 5-4 6v2H9v-2c-2-1-4-3-4-6a7 7 0 0 1 7-7z"/>
+          <line x1="9" y1="21" x2="15" y2="21"/>
+        </svg>
+      </div>
+      <div class="title">UMIDASの</div>
+      <div class="title-sub">相談AI</div>
+      <div class="subtitle">AIがお答えします</div>
+    </div>
+
+  </div>
+</body>
+</html>

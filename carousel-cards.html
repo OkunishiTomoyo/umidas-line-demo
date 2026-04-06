@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #444;
+    font-family: 'Noto Sans JP', sans-serif;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  .label { color: #ccc; font-size: 13px; margin-bottom: 4px; letter-spacing: 1px; }
+  .card {
+    width: 1510px;
+    height: 1000px;
+    background: linear-gradient(180deg, #f8fbff 0%, #f0f5fa 100%);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  /* 背景グリッド */
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+      linear-gradient(rgba(70,160,230,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(70,160,230,0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+  .card > * { position: relative; z-index: 1; }
+
+  /* カテゴリバッジ */
+  .badge {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    padding: 10px 28px;
+    border-radius: 30px;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    z-index: 2;
+  }
+  .badge-cost {
+    background: rgba(176,223,239,0.15);
+    border: 1px solid rgba(176,223,239,0.4);
+    color: #3898D0;
+  }
+  .badge-risk {
+    background: rgba(26,108,181,0.08);
+    border: 1px solid rgba(26,108,181,0.25);
+    color: #1A6CB5;
+  }
+
+  /* アイコン */
+  .icon-box {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, #B0DFEF, #7DBDD8);
+    border-radius: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 32px;
+    box-shadow: 0 8px 24px rgba(125,189,216,0.25);
+  }
+  .icon-box-risk {
+    background: linear-gradient(135deg, #6CBCE0, #1A6CB5);
+  }
+
+  /* 企業名 */
+  .company-name {
+    font-family: 'Quicksand', 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    font-size: 64px;
+    color: #1A6CB5;
+    letter-spacing: 4px;
+    margin-bottom: 16px;
+  }
+  .company-name-jp {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    font-size: 56px;
+    color: #1A6CB5;
+    letter-spacing: 6px;
+    margin-bottom: 16px;
+  }
+
+  /* 代表者 */
+  .representative {
+    font-size: 24px;
+    color: #7DBDD8;
+    letter-spacing: 2px;
+    margin-bottom: 24px;
+  }
+
+  /* サービス説明 */
+  .service-desc {
+    font-size: 34px;
+    font-weight: 600;
+    color: #3898D0;
+    letter-spacing: 4px;
+    margin-bottom: 16px;
+  }
+  .service-sub {
+    font-size: 22px;
+    color: #a0c8dc;
+    letter-spacing: 2px;
+  }
+
+  /* URL */
+  .url {
+    position: absolute;
+    bottom: 36px;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 18px;
+    color: #B0DFEF;
+    letter-spacing: 1px;
+    z-index: 2;
+  }
+
+  /* 2社まとめ版 */
+  .dual-card {
+    display: flex;
+    flex-direction: row;
+  }
+  .dual-card .half {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+  }
+  .dual-card .divider {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    width: 1px;
+    height: 80%;
+    background: rgba(56,152,208,0.1);
+    z-index: 2;
+  }
+</style>
+</head>
+<body>
+
+<!-- =============================== -->
+<!-- コスト削減 カテゴリ -->
+<!-- =============================== -->
+
+<!-- 1. ApoLink -->
+<div class="label">1. ApoLink</div>
+<div class="card" id="card-apolink">
+  <div class="badge badge-cost">コスト削減</div>
+  <div class="icon-box">
+    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+  </div>
+  <div class="company-name">ApoLink</div>
+  <div class="representative">菅野社長</div>
+  <div class="service-desc">リード獲得</div>
+  <div class="service-sub">アポイント獲得の効率化支援</div>
+  <div class="url">apolink.net</div>
+</div>
+
+<!-- 2. SCORE X -->
+<div class="label">2. SCORE X</div>
+<div class="card" id="card-scorex">
+  <div class="badge badge-cost">コスト削減</div>
+  <div class="icon-box">
+    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+  </div>
+  <div class="company-name">SCORE X</div>
+  <div class="representative">吉住社長</div>
+  <div class="service-desc">リード獲得</div>
+  <div class="service-sub">決裁者限定マッチングプラットフォーム</div>
+  <div class="url">www.score-x.net</div>
+</div>
+
+<!-- 3. バリューイノベーション -->
+<div class="label">3. バリューイノベーション</div>
+<div class="card" id="card-value">
+  <div class="badge badge-cost">コスト削減</div>
+  <div class="icon-box">
+    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+  </div>
+  <div class="company-name-jp">バリューイノベーション</div>
+  <div class="representative">米田社長</div>
+  <div class="service-desc">複合機コスト削減</div>
+  <div class="service-sub">印刷コストの圧倒的な削減提案</div>
+  <div class="url">value-innovation.co.jp</div>
+</div>
+
+<!-- 4. 月兎ソース -->
+<div class="label">4. 月兎ソース</div>
+<div class="card" id="card-getto">
+  <div class="badge badge-cost">コスト削減</div>
+  <div class="icon-box">
+    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+  </div>
+  <div class="company-name-jp">月兎ソース</div>
+  <div class="representative">清水社長</div>
+  <div class="service-desc">食品・飲食店のコスト削減</div>
+  <div class="service-sub">食品メーカーによる仕入れコスト最適化</div>
+  <div class="url">www.gettosauce.co.jp</div>
+</div>
+
+<!-- 5. エクセルリンク & GOEN（1枚版） -->
+<div class="label">5. エクセルリンク & GOEN（1枚版）</div>
+<div class="card dual-card" id="card-excel-goen">
+  <div class="badge badge-cost">コスト削減</div>
+  <div class="divider"></div>
+  <div class="half">
+    <div class="icon-box">
+      <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    </div>
+    <div class="company-name" style="font-size:48px;">エクセルリンク</div>
+    <div class="representative">白沢さん</div>
+    <div class="service-desc" style="font-size:28px;">損害保険</div>
+    <div class="url" style="left:25%;transform:translateX(-50%);">xls.co.jp/business</div>
+  </div>
+  <div class="half">
+    <div class="icon-box">
+      <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+    </div>
+    <div class="company-name" style="font-size:48px;">GOEN</div>
+    <div class="representative">宮崎さん</div>
+    <div class="service-desc" style="font-size:28px;">損害保険</div>
+    <div class="url" style="right:25%;left:auto;transform:translateX(50%);">goen-group.jp</div>
+  </div>
+</div>
+
+<!-- 6. エクセルリンク（単体） -->
+<div class="label">6. エクセルリンク（単体）</div>
+<div class="card" id="card-excel">
+  <div class="badge badge-cost">コスト削減</div>
+  <div class="icon-box">
+    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+  </div>
+  <div class="company-name-jp">エクセルリンク</div>
+  <div class="representative">白沢さん</div>
+  <div class="service-desc">損害保険</div>
+  <div class="service-sub">最適な保険プランの提案</div>
+  <div class="url">xls.co.jp/business</div>
+</div>
+
+<!-- 7. GOEN（単体） -->
+<div class="label">7. GOEN（単体）</div>
+<div class="card" id="card-goen">
+  <div class="badge badge-cost">コスト削減</div>
+  <div class="icon-box">
+    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+  </div>
+  <div class="company-name">GOEN</div>
+  <div class="representative">宮崎さん</div>
+  <div class="service-desc">損害保険</div>
+  <div class="service-sub">ご縁を提供する保険パートナー</div>
+  <div class="url">goen-group.jp</div>
+</div>
+
+<!-- 8. ナナ文具 -->
+<div class="label">8. ナナ文具</div>
+<div class="card" id="card-nana">
+  <div class="badge badge-cost">コスト削減</div>
+  <div class="icon-box">
+    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+  </div>
+  <div class="company-name-jp">ナナ文具</div>
+  <div class="representative">丸島社長</div>
+  <div class="service-desc">ASKUL代理店</div>
+  <div class="service-sub">オフィス用品のコスト最適化</div>
+  <div class="url">qqq383.wixsite.com/nanabungu</div>
+</div>
+
+<!-- 9. Sanyo Logistics -->
+<div class="label">9. Sanyo Logistics</div>
+<div class="card" id="card-sanyo">
+  <div class="badge badge-cost">コスト削減</div>
+  <div class="icon-box">
+    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+  </div>
+  <div class="company-name">Sanyo Logistics</div>
+  <div class="representative">藤井社長</div>
+  <div class="service-desc">貿易コスト削減</div>
+  <div class="service-sub">物流・貿易の最適化支援</div>
+  <div class="url">www.sanyo-logi.com</div>
+</div>
+
+<!-- 10. y-Doc -->
+<div class="label">10. y-Doc</div>
+<div class="card" id="card-ydoc">
+  <div class="badge badge-cost">コスト削減</div>
+  <div class="icon-box">
+    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M3 3h18v18H3z"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>
+  </div>
+  <div class="company-name">y-Doc</div>
+  <div class="representative">寺沢社長</div>
+  <div class="service-desc">飲食店集客</div>
+  <div class="service-sub">飲食店の集客力を最大化</div>
+  <div class="url">linkoflife.site</div>
+</div>
+
+<!-- 11. ヒトミー -->
+<div class="label">11. ヒトミー</div>
+<div class="card" id="card-hitomee">
+  <div class="badge badge-cost">コスト削減</div>
+  <div class="icon-box">
+    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+  </div>
+  <div class="company-name-jp">ヒトミー</div>
+  <div class="representative">滝川社長</div>
+  <div class="service-desc">学生プラットフォーム</div>
+  <div class="service-sub">地方特化型の説明会求人媒体</div>
+  <div class="url">www.hitomee-recruit.com</div>
+</div>
+
+<!-- 12. アクトプロ -->
+<div class="label">12. アクトプロ</div>
+<div class="card" id="card-actpro">
+  <div class="badge badge-cost">コスト削減</div>
+  <div class="icon-box">
+    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+  </div>
+  <div class="company-name-jp">アクトプロ</div>
+  <div class="representative">鈴木さん</div>
+  <div class="service-desc">家賃削減・電力削減</div>
+  <div class="service-sub">賃料適正化と大手電力コスト削減</div>
+  <div class="url">actpro.co.jp</div>
+</div>
+
+<!-- 13. Aitane -->
+<div class="label">13. Aitane</div>
+<div class="card" id="card-aitane">
+  <div class="badge badge-cost">コスト削減</div>
+  <div class="icon-box">
+    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 8h.01"/><path d="M12 8h.01"/><path d="M17 8h.01"/></svg>
+  </div>
+  <div class="company-name">Aitane</div>
+  <div class="representative">會田社長</div>
+  <div class="service-desc">AI搭載CRM</div>
+  <div class="service-sub">AIエージェントで営業活動を効率化</div>
+  <div class="url">aitane.co.jp</div>
+</div>
+
+<!-- 14. 日本国際貿易センター -->
+<div class="label">14. 日本国際貿易センター</div>
+<div class="card" id="card-jitc">
+  <div class="badge badge-cost">コスト削減</div>
+  <div class="icon-box">
+    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+  </div>
+  <div class="company-name-jp" style="font-size:44px;">日本国際貿易センター</div>
+  <div class="representative">牧本社長</div>
+  <div class="service-desc">資源コスト削減</div>
+  <div class="service-sub">日中間の商流再構築で利益率向上</div>
+  <div class="url">japaninternationaltrade.co.jp</div>
+</div>
+
+<!-- =============================== -->
+<!-- リスク回避 カテゴリ -->
+<!-- =============================== -->
+
+<!-- 15. AIDホールディングス -->
+<div class="label">15. AIDホールディングス</div>
+<div class="card" id="card-aid">
+  <div class="badge badge-risk">リスク回避</div>
+  <div class="icon-box icon-box-risk">
+    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+  </div>
+  <div class="company-name">AIDホールディングス</div>
+  <div class="representative">西田社長</div>
+  <div class="service-desc">風評被害防止対策</div>
+  <div class="service-sub">AIによるオンライン評判リスク監視</div>
+  <div class="url">aid-hd.com</div>
+</div>
+
+<!-- 16. トータルサポート -->
+<div class="label">16. トータルサポート</div>
+<div class="card" id="card-total">
+  <div class="badge badge-risk">リスク回避</div>
+  <div class="icon-box icon-box-risk">
+    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M20 8v6"/><path d="M23 11h-6"/></svg>
+  </div>
+  <div class="company-name-jp" style="font-size:48px;">経営トータルサポート</div>
+  <div class="representative">渡邊社長</div>
+  <div class="service-desc">労務相談</div>
+  <div class="service-sub">社労士による人事労務管理サポート</div>
+  <div class="url">sr-support.jp</div>
+</div>
+
+<!-- 17. カスタマークラウド -->
+<div class="label">17. カスタマークラウド</div>
+<div class="card" id="card-cc">
+  <div class="badge badge-risk">リスク回避</div>
+  <div class="icon-box icon-box-risk">
+    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+  </div>
+  <div class="company-name-jp" style="font-size:48px;">カスタマークラウド</div>
+  <div class="representative">木下社長</div>
+  <div class="service-desc">セキュリティシステム</div>
+  <div class="service-sub">AI・DXによるセキュリティ対策支援</div>
+  <div class="url">www.customercloud.co.jp</div>
+</div>
+
+<!-- 18. EXE Partnerz -->
+<div class="label">18. EXE Partnerz</div>
+<div class="card" id="card-exe">
+  <div class="badge badge-risk">リスク回避</div>
+  <div class="icon-box icon-box-risk">
+    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+  </div>
+  <div class="company-name">EXE Partnerz</div>
+  <div class="representative">小正社長</div>
+  <div class="service-desc">税務相談</div>
+  <div class="service-sub">経営者に伴走する税務パートナー</div>
+  <div class="url">exe-partnerz.com</div>
+</div>
+
+<!-- 19. アラームボックス -->
+<div class="label">19. アラームボックス</div>
+<div class="card" id="card-alarm">
+  <div class="badge badge-risk">リスク回避</div>
+  <div class="icon-box icon-box-risk">
+    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+  </div>
+  <div class="company-name-jp" style="font-size:52px;">アラームボックス</div>
+  <div class="representative">伊藤取締役</div>
+  <div class="service-desc">売上保証</div>
+  <div class="service-sub">AI与信管理による売掛金保証</div>
+  <div class="url">alarmbox.co.jp</div>
+</div>
+
+</body>
+</html>

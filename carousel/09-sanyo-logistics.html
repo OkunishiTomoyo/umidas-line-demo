@@ -1,0 +1,161 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>
+  @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #444;
+    font-family: 'Noto Sans JP', sans-serif;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  .label { color: #ccc; font-size: 13px; margin-bottom: 4px; letter-spacing: 1px; }
+  .card {
+    width: 1510px;
+    height: 1000px;
+    background: linear-gradient(180deg, #f8fbff 0%, #f0f5fa 100%);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  /* 背景グリッド */
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+      linear-gradient(rgba(70,160,230,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(70,160,230,0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+  .card > * { position: relative; z-index: 1; }
+
+  /* カテゴリバッジ */
+  .badge {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    padding: 10px 28px;
+    border-radius: 30px;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    z-index: 2;
+  }
+  .badge-cost {
+    background: rgba(176,223,239,0.15);
+    border: 1px solid rgba(176,223,239,0.4);
+    color: #3898D0;
+  }
+  .badge-risk {
+    background: rgba(26,108,181,0.08);
+    border: 1px solid rgba(26,108,181,0.25);
+    color: #1A6CB5;
+  }
+
+  /* アイコン */
+  .icon-box {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, #B0DFEF, #7DBDD8);
+    border-radius: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 32px;
+    box-shadow: 0 8px 24px rgba(125,189,216,0.25);
+  }
+  .icon-box-risk {
+    background: linear-gradient(135deg, #6CBCE0, #1A6CB5);
+  }
+
+  /* 企業名 */
+  .company-name {
+    font-family: 'Quicksand', 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    font-size: 64px;
+    color: #1A6CB5;
+    letter-spacing: 4px;
+    margin-bottom: 16px;
+  }
+  .company-name-jp {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    font-size: 56px;
+    color: #1A6CB5;
+    letter-spacing: 6px;
+    margin-bottom: 16px;
+  }
+
+  /* 代表者 */
+  .representative {
+    font-size: 24px;
+    color: #7DBDD8;
+    letter-spacing: 2px;
+    margin-bottom: 24px;
+  }
+
+  /* サービス説明 */
+  .service-desc {
+    font-size: 34px;
+    font-weight: 600;
+    color: #3898D0;
+    letter-spacing: 4px;
+    margin-bottom: 16px;
+  }
+  .service-sub {
+    font-size: 22px;
+    color: #a0c8dc;
+    letter-spacing: 2px;
+  }
+
+  /* URL */
+  .url {
+    position: absolute;
+    bottom: 36px;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 18px;
+    color: #B0DFEF;
+    letter-spacing: 1px;
+    z-index: 2;
+  }
+
+  /* 2社まとめ版 */
+  .dual-card {
+    display: flex;
+    flex-direction: row;
+  }
+  .dual-card .half {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+  }
+  .dual-card .divider {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    width: 1px;
+    height: 80%;
+    background: rgba(56,152,208,0.1);
+    z-index: 2;
+  }
+</style><style>body{margin:0;padding:0;display:flex;justify-content:center;align-items:center;width:1510px;height:1000px;}</style></head><body><div class="card" id="card-sanyo">
+  <div class="badge badge-cost">コスト削減</div>
+  <div class="icon-box">
+    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+  </div>
+  <div class="company-name">Sanyo Logistics</div>
+  <div class="representative">藤井社長</div>
+  <div class="service-desc">貿易コスト削減</div>
+  <div class="service-sub">物流・貿易の最適化支援</div>
+  <div class="url">www.sanyo-logi.com</div>
+</div></body></html>

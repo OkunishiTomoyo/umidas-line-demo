@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #333;
+    font-family: 'Noto Sans JP', sans-serif;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+  h2 { color: #ccc; font-size: 16px; letter-spacing: 2px; margin-bottom: 4px; }
+  .wrap { transform: scale(0.32); transform-origin: top center; height: 540px; }
+
+  /* ベースメニュー */
+  .menu {
+    width: 2500px;
+    height: 1686px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 6px;
+    padding: 6px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cell {
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+  .service { grid-column: 1 / 3; grid-row: 1; }
+  .mypage { grid-column: 3; grid-row: 1 / 3; }
+  .collab { grid-column: 1; grid-row: 2; }
+  .ai { grid-column: 2; grid-row: 2; }
+
+  .icon-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 36px;
+  }
+  .icon-box svg { width: 80px; height: 80px; }
+  .t1 { font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 72px; letter-spacing: 6px; margin-bottom: 16px; }
+  .t2 { font-size: 44px; font-weight: 700; letter-spacing: 8px; margin-bottom: 12px; }
+  .t3 { font-size: 28px; letter-spacing: 3px; }
+  .t4 { font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 60px; letter-spacing: 3px; margin-bottom: 12px; }
+  .t5 { font-size: 48px; font-weight: 700; letter-spacing: 4px; margin-bottom: 10px; }
+  .t6 { font-size: 54px; font-weight: 700; letter-spacing: 3px; }
+  .t7 { font-size: 26px; letter-spacing: 2px; }
+
+  /* グリッド背景 */
+  .grid-bg::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+      linear-gradient(rgba(70,160,230,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(70,160,230,0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ===== デザイン1: ダークブルー近未来 ===== */
+  .d1 { background: linear-gradient(135deg, #0a1628, #0d2240, #0a1c38); }
+  .d1 .cell { background: rgba(255,255,255,0.04); border: 1px solid rgba(100,180,255,0.15); }
+  .d1 .icon-box { width: 140px; height: 140px; background: rgba(56,152,208,0.15); border: 1px solid rgba(56,152,208,0.3); border-radius: 30px; }
+  .d1 .icon-box svg { stroke: #5bbef5; }
+  .d1 .t1 { background: linear-gradient(90deg, #7EC8E3, #3898D0); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .d1 .t2, .d1 .t5, .d1 .t6 { color: #8ec5f6; }
+  .d1 .t3, .d1 .t7 { color: rgba(142,197,246,0.5); }
+  .d1 .t4 { color: #5bbef5; }
+  .d1 .mypage .icon-box { border-radius: 50%; }
+
+  /* ===== デザイン2: ホワイト+ネオンライン ===== */
+  .d2 { background: #f4f8fc; }
+  .d2 .cell { background: #fff; box-shadow: 0 0 0 2px rgba(56,152,208,0.1); }
+  .d2 .cell::after { content:''; position:absolute; bottom:0; left:20%; right:20%; height:3px; background:linear-gradient(90deg,#B0DFEF,#1A6CB5); border-radius:2px; }
+  .d2 .icon-box { width: 140px; height: 140px; background: linear-gradient(135deg, #B0DFEF, #3898D0); border-radius: 30px; box-shadow: 0 8px 30px rgba(56,152,208,0.25); }
+  .d2 .icon-box svg { stroke: #fff; }
+  .d2 .t1 { background: linear-gradient(90deg, #B0DFEF, #6CBCE0, #3898D0, #1A6CB5); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .d2 .t2, .d2 .t5, .d2 .t6 { color: #1A6CB5; }
+  .d2 .t3, .d2 .t7 { color: #7aabcc; }
+  .d2 .t4 { color: #1A6CB5; }
+  .d2 .mypage .icon-box { border-radius: 50%; background: linear-gradient(135deg, #6CBCE0, #1A6CB5); }
+
+  /* ===== デザイン3: グラデーション全面 ===== */
+  .d3 { background: linear-gradient(135deg, #1a3a5f, #2a5a8f, #1a4d7a); }
+  .d3 .cell { background: rgba(255,255,255,0.08); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.12); }
+  .d3 .icon-box { width: 140px; height: 140px; background: rgba(255,255,255,0.15); border-radius: 30px; }
+  .d3 .icon-box svg { stroke: #fff; }
+  .d3 .t1 { color: #fff; }
+  .d3 .t2, .d3 .t5, .d3 .t6 { color: rgba(255,255,255,0.9); }
+  .d3 .t3, .d3 .t7 { color: rgba(255,255,255,0.5); }
+  .d3 .t4 { color: #fff; }
+  .d3 .mypage .icon-box { border-radius: 50%; }
+
+  /* ===== デザイン4: ダーク+グロー ===== */
+  .d4 { background: #080e1a; }
+  .d4 .cell { background: rgba(20,40,70,0.6); border: 1px solid rgba(0,160,255,0.2); }
+  .d4 .icon-box { width: 140px; height: 140px; background: rgba(0,140,255,0.12); border: 2px solid rgba(0,160,255,0.4); border-radius: 30px; box-shadow: 0 0 30px rgba(0,160,255,0.15); }
+  .d4 .icon-box svg { stroke: #00aaff; }
+  .d4 .t1 { background: linear-gradient(90deg, #00bbff, #0088dd); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .d4 .t2, .d4 .t5, .d4 .t6 { color: #00bbff; }
+  .d4 .t3, .d4 .t7 { color: rgba(0,187,255,0.4); }
+  .d4 .t4 { color: #00aaff; }
+  .d4 .mypage .icon-box { border-radius: 50%; }
+
+  /* ===== デザイン5: ホワイト+カード影 ===== */
+  .d5 { background: #eef3f8; }
+  .d5 .cell { background: #fff; border-radius: 24px; box-shadow: 0 4px 20px rgba(0,80,140,0.08); }
+  .d5 .icon-box { width: 140px; height: 140px; background: #f0f7ff; border-radius: 50%; border: 3px solid #B0DFEF; }
+  .d5 .icon-box svg { stroke: #3898D0; }
+  .d5 .t1 { background: linear-gradient(90deg, #B0DFEF, #1A6CB5); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .d5 .t2, .d5 .t5, .d5 .t6 { color: #1A6CB5; }
+  .d5 .t3, .d5 .t7 { color: #93bdd6; }
+  .d5 .t4 { color: #1A6CB5; }
+
+  /* ===== デザイン6: グリッド+透過 ===== */
+  .d6 { background: linear-gradient(160deg, #ffffff, #e8f2ff, #dceeff); }
+  .d6 .cell { background: rgba(255,255,255,0.7); border: 1px solid rgba(56,152,208,0.15); }
+  .d6 .icon-box { width: 140px; height: 140px; background: linear-gradient(135deg, #3898D0, #0E4F8C); border-radius: 30px; box-shadow: 0 10px 30px rgba(14,79,140,0.2); }
+  .d6 .icon-box svg { stroke: #fff; }
+  .d6 .t1 { background: linear-gradient(90deg, #3898D0, #0E4F8C); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .d6 .t2, .d6 .t5, .d6 .t6 { color: #0E4F8C; }
+  .d6 .t3, .d6 .t7 { color: #6CBCE0; }
+  .d6 .t4 { color: #0E4F8C; }
+  .d6 .mypage .icon-box { border-radius: 50%; }
+
+  /* ===== デザイン7: ネイビー+ゴールドアクセント ===== */
+  .d7 { background: linear-gradient(135deg, #0d1b2a, #1b2838, #0d1b2a); }
+  .d7 .cell { background: rgba(255,255,255,0.03); border: 1px solid rgba(200,180,120,0.15); }
+  .d7 .icon-box { width: 140px; height: 140px; background: rgba(200,180,120,0.1); border: 1px solid rgba(200,180,120,0.25); border-radius: 30px; }
+  .d7 .icon-box svg { stroke: #c8b478; }
+  .d7 .t1 { background: linear-gradient(90deg, #c8b478, #e0d0a0); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .d7 .t2, .d7 .t5, .d7 .t6 { color: #c8b478; }
+  .d7 .t3, .d7 .t7 { color: rgba(200,180,120,0.4); }
+  .d7 .t4 { color: #e0d0a0; }
+  .d7 .mypage .icon-box { border-radius: 50%; }
+
+  /* ===== デザイン8: サイバーパンク ===== */
+  .d8 { background: linear-gradient(135deg, #0a0a1a, #101030, #0a0a1a); }
+  .d8 .cell { background: rgba(20,20,60,0.5); border: 1px solid rgba(100,140,255,0.2); }
+  .d8 .cell::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,rgba(100,180,255,0.5),transparent); }
+  .d8 .icon-box { width: 140px; height: 140px; background: rgba(60,100,200,0.15); border: 1px solid rgba(100,160,255,0.3); border-radius: 20px; box-shadow: 0 0 20px rgba(60,120,255,0.1); }
+  .d8 .icon-box svg { stroke: #6cacff; }
+  .d8 .t1 { background: linear-gradient(90deg, #6cacff, #a0c8ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .d8 .t2, .d8 .t5, .d8 .t6 { color: #8cbcff; }
+  .d8 .t3, .d8 .t7 { color: rgba(140,188,255,0.4); }
+  .d8 .t4 { color: #a0c8ff; }
+  .d8 .mypage .icon-box { border-radius: 50%; }
+
+  /* ===== デザイン9: ミニマルホワイト ===== */
+  .d9 { background: #ffffff; }
+  .d9 .cell { background: #fff; border-bottom: 3px solid; border-image: linear-gradient(90deg, #B0DFEF, #1A6CB5) 1; border-top: none; border-left: none; border-right: none; border-radius: 0; }
+  .d9 .icon-box { width: 130px; height: 130px; background: transparent; border: 3px solid #3898D0; border-radius: 50%; }
+  .d9 .icon-box svg { stroke: #3898D0; }
+  .d9 .t1 { background: linear-gradient(90deg, #B0DFEF, #1A6CB5); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .d9 .t2, .d9 .t5, .d9 .t6 { color: #1A6CB5; }
+  .d9 .t3, .d9 .t7 { color: #aaa; }
+  .d9 .t4 { color: #1A6CB5; }
+
+  /* ===== デザイン10: UMIDAS水面風 ===== */
+  .d10 { background: linear-gradient(180deg, #e8f4fd, #c8e4f8, #a8d4f0, #88c4e8); }
+  .d10 .cell { background: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.8); backdrop-filter: blur(8px); }
+  .d10 .icon-box { width: 140px; height: 140px; background: rgba(255,255,255,0.8); border-radius: 30px; box-shadow: 0 8px 24px rgba(56,152,208,0.15); }
+  .d10 .icon-box svg { stroke: #1A6CB5; }
+  .d10 .t1 { background: linear-gradient(90deg, #3898D0, #0E4F8C); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .d10 .t2, .d10 .t5, .d10 .t6 { color: #1A6CB5; }
+  .d10 .t3, .d10 .t7 { color: rgba(26,108,181,0.5); }
+  .d10 .t4 { color: #0E4F8C; }
+  .d10 .mypage .icon-box { border-radius: 50%; }
+</style>
+</head>
+<body>
+
+<script>
+function makeMenu(cls, num) {
+  return `
+  <h2>デザイン${num}</h2>
+  <div class="wrap">
+    <div class="menu ${cls} grid-bg">
+      <div class="cell service">
+        <div class="icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+        </div>
+        <div class="t1">UMIDAS</div>
+        <div class="t2">サービス一覧</div>
+        <div class="t3">コスト削減の厳選サービスをご覧ください</div>
+      </div>
+      <div class="cell mypage">
+        <div class="icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <div class="t4">My Page</div>
+        <div class="t7">マイページ</div>
+      </div>
+      <div class="cell collab">
+        <div class="icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polygon points="5,3 19,12 5,21"/></svg>
+        </div>
+        <div class="t5">コラボ動画</div>
+        <div class="t7">限定コンテンツ</div>
+      </div>
+      <div class="cell ai">
+        <div class="icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 2a7 7 0 0 1 7 7c0 3-2 5-4 6v2H9v-2c-2-1-4-3-4-6a7 7 0 0 1 7-7z"/><line x1="9" y1="21" x2="15" y2="21"/></svg>
+        </div>
+        <div class="t6">相談AI</div>
+        <div class="t7">AIがお答えします</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+const designs = ['d1','d2','d3','d4','d5','d6','d7','d8','d9','d10'];
+document.body.innerHTML = designs.map((d,i) => makeMenu(d, i+1)).join('');
+</script>
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@600;700&family=Noto+Sans+JP:wght@400;500;600;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+body{width:1510px;height:1000px;font-family:'Noto Sans JP',sans-serif;background:#fff;}
+.card{width:1510px;height:1000px;display:flex;flex-direction:column;position:relative;overflow:hidden;}
+.photo{width:100%;height:580px;overflow:hidden;position:relative;}
+.photo img{width:100%;height:100%;object-fit:cover;object-position:center;}
+.photo-overlay{position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg,rgba(0,0,0,0.1) 0%,rgba(0,0,0,0.02) 40%,rgba(255,255,255,0.6) 85%,rgba(255,255,255,1) 100%);}
+.badge{position:absolute;top:28px;left:28px;padding:12px 28px;border-radius:24px;font-size:22px;font-weight:700;letter-spacing:3px;z-index:2;backdrop-filter:blur(8px);background:rgba(255,255,255,0.85);color:#1A6CB5;}
+.info{flex:1;padding:24px 52px;display:flex;align-items:center;gap:40px;background:#fff;}
+.info-text{flex:1;}
+.company-name{font-family:'Noto Sans JP', sans-serif;font-weight:700;font-size:44px;color:#1A6CB5;letter-spacing:3px;margin-bottom:6px;}
+.rep{font-size:22px;color:#7DBDD8;margin-bottom:12px;letter-spacing:1px;}
+.service{font-size:32px;font-weight:700;color:#3898D0;letter-spacing:4px;margin-bottom:6px;}
+.desc{font-size:22px;color:#a0c8dc;letter-spacing:1px;}
+.btn{display:flex;align-items:center;justify-content:center;width:240px;height:68px;background:linear-gradient(135deg,#6CBCE0,#1A6CB5);border-radius:18px;color:#fff;font-size:26px;font-weight:700;letter-spacing:4px;box-shadow:0 8px 24px rgba(26,108,181,0.25);flex-shrink:0;}
+.url{font-family:'Quicksand',sans-serif;font-size:18px;color:#B0DFEF;margin-top:8px;letter-spacing:1px;}
+</style></head><body>
+<div class="card">
+  <div class="photo">
+    <img src="photos/13-jitc.jpg"/>
+    <div class="photo-overlay"></div>
+    <div class="badge">コスト削減</div>
+  </div>
+  <div class="info">
+    <div class="info-text">
+      <div class="company-name">日本国際貿易センター</div>
+      <div class="rep">牧本社長</div>
+      <div class="service">資源コスト削減</div>
+      <div class="desc">日中間の商流再構築で利益率向上</div>
+      <div class="url">japaninternationaltrade.co.jp</div>
+    </div>
+    <div class="btn">詳細を見る</div>
+  </div>
+</div>
+</body></html>

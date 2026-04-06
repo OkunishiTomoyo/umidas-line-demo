@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@700&family=Zen+Old+Mincho:wght@700&family=Noto+Sans+JP:wght@400;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #e8e8e8;
+    font-family: 'Noto Sans JP', sans-serif;
+    padding: 30px;
+  }
+  h2 {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    margin: 20px 0 10px;
+    letter-spacing: 1px;
+  }
+  .paper-row {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 30px;
+  }
+  /* 名刺サイズ 91mm x 55mm → 比率維持で表示 */
+  .card {
+    width: 364px;
+    height: 220px;
+    border-radius: 4px;
+    padding: 24px;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+
+  /* ===== 用紙タイプ ===== */
+  /* マシュマロCoC（マットな白） */
+  .marshmallow { background: #fafafa; }
+  /* マシュマロCoC ナチュラル（クリーム色） */
+  .natural { background: #f7f3ea; }
+  /* サンサンケント（青みがかった白） */
+  .sansankent { background: #f2f5fa; }
+  /* アートポスト（光沢のある白） */
+  .artpost { background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.15), inset 0 0 60px rgba(255,255,255,0.8); }
+  .artpost::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, transparent 40%, transparent 60%, rgba(255,255,255,0.2) 100%);
+    border-radius: 4px;
+    pointer-events: none;
+  }
+  /* マットポスト（マットな厚手白） */
+  .mattpost { background: #f8f8f8; box-shadow: 0 3px 10px rgba(0,0,0,0.18); }
+
+  /* ===== 表面 ===== */
+  .front .logo {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    letter-spacing: 3px;
+    background: linear-gradient(90deg, #B0DFEF 0%, #6CBCE0 25%, #3898D0 55%, #1A6CB5 85%, #0E4F8C 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+  .front .title {
+    font-size: 10px;
+    color: #444;
+    margin-bottom: 4px;
+  }
+  .front .name-ja {
+    font-size: 18px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 2px;
+  }
+  .front .name-en {
+    font-size: 9px;
+    color: #666;
+    margin-bottom: 10px;
+  }
+  .front .divider {
+    width: 140px;
+    height: 1px;
+    background: #ccc;
+    margin-bottom: 10px;
+  }
+  .front .company {
+    font-size: 8px;
+    color: #444;
+    margin-bottom: 4px;
+  }
+  .front .address {
+    font-size: 7px;
+    color: #555;
+    line-height: 1.6;
+  }
+  .front .contact {
+    font-size: 7px;
+    color: #555;
+    line-height: 1.6;
+    margin-top: 4px;
+  }
+
+  /* ===== 裏面 ===== */
+  .back {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .back .tagline {
+    font-family: 'Zen Old Mincho', serif;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, #B0DFEF 0%, #6CBCE0 25%, #3898D0 55%, #1A6CB5 85%, #0E4F8C 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+  }
+  .back .ripple-icon {
+    margin-bottom: 8px;
+  }
+  .back .desc {
+    font-size: 9px;
+    color: #444;
+    margin-bottom: 2px;
+  }
+  .back .qr-placeholder {
+    width: 70px;
+    height: 70px;
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 7px;
+    color: #999;
+  }
+
+  .label {
+    text-align: center;
+    font-size: 11px;
+    color: #888;
+    margin-top: 6px;
+  }
+</style>
+</head>
+<body>
+
+<!-- マシュマロCoC -->
+<h2>マシュマロCoC（薄手）— マットな白の名刺用紙</h2>
+<div class="paper-row">
+  <div>
+    <div class="card marshmallow front">
+      <div class="logo">UMIDAS</div>
+      <div class="title">代表取締役/CEO</div>
+      <div class="name-ja">上野 剛</div>
+      <div class="name-en">Tsuyoshi Ueno</div>
+      <div class="divider"></div>
+      <div class="company">株式会社UMIDAS</div>
+      <div class="address">東京本社　〒112-0004<br>東京都文京区後楽２丁目3-8 201号室</div>
+      <div class="contact">Tel:03-5615-8696<br>Mobile:090-9219-2972<br>Mail : ueno.tsuyoshi@umidas.group</div>
+    </div>
+    <div class="label">表面</div>
+  </div>
+  <div>
+    <div class="card marshmallow back">
+      <div class="tagline">心に余裕をウミダス</div>
+      <svg class="ripple-icon" width="60" height="50" viewBox="0 0 200 150">
+        <circle cx="100" cy="30" r="16" fill="#6CBCE0"/>
+        <ellipse cx="97" cy="25" rx="3" ry="5" fill="#fff" opacity="0.25"/>
+        <path d="M90,45 C92,55 82,65 74,72 C85,68 100,66 100,66 C100,66 115,68 126,72 C118,65 108,55 110,45" fill="#7EC8E3"/>
+        <ellipse cx="100" cy="72" rx="30" ry="10" fill="#B0DFEF"/>
+        <ellipse cx="100" cy="78" rx="48" ry="15" fill="none" stroke="#3898D0" stroke-width="6"/>
+        <ellipse cx="100" cy="84" rx="70" ry="22" fill="none" stroke="#1A6CB5" stroke-width="5"/>
+      </svg>
+      <div class="desc">コスト削減の総合窓口</div>
+      <div class="desc">プラットフォーム「UMIDAS」</div>
+      <div class="qr-placeholder">QRコード</div>
+    </div>
+    <div class="label">裏面</div>
+  </div>
+</div>
+
+<!-- マシュマロCoC ナチュラル -->
+<h2>マシュマロCoC ナチュラル（薄手）— マットなクリーム色の名刺用紙</h2>
+<div class="paper-row">
+  <div>
+    <div class="card natural front">
+      <div class="logo">UMIDAS</div>
+      <div class="title">代表取締役/CEO</div>
+      <div class="name-ja">上野 剛</div>
+      <div class="name-en">Tsuyoshi Ueno</div>
+      <div class="divider"></div>
+      <div class="company">株式会社UMIDAS</div>
+      <div class="address">東京本社　〒112-0004<br>東京都文京区後楽２丁目3-8 201号室</div>
+      <div class="contact">Tel:03-5615-8696<br>Mobile:090-9219-2972<br>Mail : ueno.tsuyoshi@umidas.group</div>
+    </div>
+    <div class="label">表面</div>
+  </div>
+  <div>
+    <div class="card natural back">
+      <div class="tagline">心に余裕をウミダス</div>
+      <svg class="ripple-icon" width="60" height="50" viewBox="0 0 200 150">
+        <circle cx="100" cy="30" r="16" fill="#6CBCE0"/>
+        <ellipse cx="97" cy="25" rx="3" ry="5" fill="#fff" opacity="0.25"/>
+        <path d="M90,45 C92,55 82,65 74,72 C85,68 100,66 100,66 C100,66 115,68 126,72 C118,65 108,55 110,45" fill="#7EC8E3"/>
+        <ellipse cx="100" cy="72" rx="30" ry="10" fill="#B0DFEF"/>
+        <ellipse cx="100" cy="78" rx="48" ry="15" fill="none" stroke="#3898D0" stroke-width="6"/>
+        <ellipse cx="100" cy="84" rx="70" ry="22" fill="none" stroke="#1A6CB5" stroke-width="5"/>
+      </svg>
+      <div class="desc">コスト削減の総合窓口</div>
+      <div class="desc">プラットフォーム「UMIDAS」</div>
+      <div class="qr-placeholder">QRコード</div>
+    </div>
+    <div class="label">裏面</div>
+  </div>
+</div>
+
+<!-- サンサンケント -->
+<h2>サンサンケント（薄手）— 青みがかった白の名刺用紙</h2>
+<div class="paper-row">
+  <div>
+    <div class="card sansankent front">
+      <div class="logo">UMIDAS</div>
+      <div class="title">代表取締役/CEO</div>
+      <div class="name-ja">上野 剛</div>
+      <div class="name-en">Tsuyoshi Ueno</div>
+      <div class="divider"></div>
+      <div class="company">株式会社UMIDAS</div>
+      <div class="address">東京本社　〒112-0004<br>東京都文京区後楽２丁目3-8 201号室</div>
+      <div class="contact">Tel:03-5615-8696<br>Mobile:090-9219-2972<br>Mail : ueno.tsuyoshi@umidas.group</div>
+    </div>
+    <div class="label">表面</div>
+  </div>
+  <div>
+    <div class="card sansankent back">
+      <div class="tagline">心に余裕をウミダス</div>
+      <svg class="ripple-icon" width="60" height="50" viewBox="0 0 200 150">
+        <circle cx="100" cy="30" r="16" fill="#6CBCE0"/>
+        <ellipse cx="97" cy="25" rx="3" ry="5" fill="#fff" opacity="0.25"/>
+        <path d="M90,45 C92,55 82,65 74,72 C85,68 100,66 100,66 C100,66 115,68 126,72 C118,65 108,55 110,45" fill="#7EC8E3"/>
+        <ellipse cx="100" cy="72" rx="30" ry="10" fill="#B0DFEF"/>
+        <ellipse cx="100" cy="78" rx="48" ry="15" fill="none" stroke="#3898D0" stroke-width="6"/>
+        <ellipse cx="100" cy="84" rx="70" ry="22" fill="none" stroke="#1A6CB5" stroke-width="5"/>
+      </svg>
+      <div class="desc">コスト削減の総合窓口</div>
+      <div class="desc">プラットフォーム「UMIDAS」</div>
+      <div class="qr-placeholder">QRコード</div>
+    </div>
+    <div class="label">裏面</div>
+  </div>
+</div>
+
+<!-- アートポスト -->
+<h2>アートポスト（厚手・220kg）— 光沢のある白の厚手用紙</h2>
+<div class="paper-row">
+  <div>
+    <div class="card artpost front">
+      <div class="logo">UMIDAS</div>
+      <div class="title">代表取締役/CEO</div>
+      <div class="name-ja">上野 剛</div>
+      <div class="name-en">Tsuyoshi Ueno</div>
+      <div class="divider"></div>
+      <div class="company">株式会社UMIDAS</div>
+      <div class="address">東京本社　〒112-0004<br>東京都文京区後楽２丁目3-8 201号室</div>
+      <div class="contact">Tel:03-5615-8696<br>Mobile:090-9219-2972<br>Mail : ueno.tsuyoshi@umidas.group</div>
+    </div>
+    <div class="label">表面</div>
+  </div>
+  <div>
+    <div class="card artpost back">
+      <div class="tagline">心に余裕をウミダス</div>
+      <svg class="ripple-icon" width="60" height="50" viewBox="0 0 200 150">
+        <circle cx="100" cy="30" r="16" fill="#6CBCE0"/>
+        <ellipse cx="97" cy="25" rx="3" ry="5" fill="#fff" opacity="0.25"/>
+        <path d="M90,45 C92,55 82,65 74,72 C85,68 100,66 100,66 C100,66 115,68 126,72 C118,65 108,55 110,45" fill="#7EC8E3"/>
+        <ellipse cx="100" cy="72" rx="30" ry="10" fill="#B0DFEF"/>
+        <ellipse cx="100" cy="78" rx="48" ry="15" fill="none" stroke="#3898D0" stroke-width="6"/>
+        <ellipse cx="100" cy="84" rx="70" ry="22" fill="none" stroke="#1A6CB5" stroke-width="5"/>
+      </svg>
+      <div class="desc">コスト削減の総合窓口</div>
+      <div class="desc">プラットフォーム「UMIDAS」</div>
+      <div class="qr-placeholder">QRコード</div>
+    </div>
+    <div class="label">裏面</div>
+  </div>
+</div>
+
+<!-- マットポスト -->
+<h2>マットポスト（厚手・220kg）— マットな白の厚手用紙</h2>
+<div class="paper-row">
+  <div>
+    <div class="card mattpost front">
+      <div class="logo">UMIDAS</div>
+      <div class="title">代表取締役/CEO</div>
+      <div class="name-ja">上野 剛</div>
+      <div class="name-en">Tsuyoshi Ueno</div>
+      <div class="divider"></div>
+      <div class="company">株式会社UMIDAS</div>
+      <div class="address">東京本社　〒112-0004<br>東京都文京区後楽２丁目3-8 201号室</div>
+      <div class="contact">Tel:03-5615-8696<br>Mobile:090-9219-2972<br>Mail : ueno.tsuyoshi@umidas.group</div>
+    </div>
+    <div class="label">表面</div>
+  </div>
+  <div>
+    <div class="card mattpost back">
+      <div class="tagline">心に余裕をウミダス</div>
+      <svg class="ripple-icon" width="60" height="50" viewBox="0 0 200 150">
+        <circle cx="100" cy="30" r="16" fill="#6CBCE0"/>
+        <ellipse cx="97" cy="25" rx="3" ry="5" fill="#fff" opacity="0.25"/>
+        <path d="M90,45 C92,55 82,65 74,72 C85,68 100,66 100,66 C100,66 115,68 126,72 C118,65 108,55 110,45" fill="#7EC8E3"/>
+        <ellipse cx="100" cy="72" rx="30" ry="10" fill="#B0DFEF"/>
+        <ellipse cx="100" cy="78" rx="48" ry="15" fill="none" stroke="#3898D0" stroke-width="6"/>
+        <ellipse cx="100" cy="84" rx="70" ry="22" fill="none" stroke="#1A6CB5" stroke-width="5"/>
+      </svg>
+      <div class="desc">コスト削減の総合窓口</div>
+      <div class="desc">プラットフォーム「UMIDAS」</div>
+      <div class="qr-placeholder">QRコード</div>
+    </div>
+    <div class="label">裏面</div>
+  </div>
+</div>
+
+</body>
+</html>

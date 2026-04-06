@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #f5f5f5;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+  .logo-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 50px 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .label {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #999;
+    letter-spacing: 1px;
+    font-family: sans-serif;
+  }
+</style>
+</head>
+<body>
+
+<!-- シンボル上 + テキスト下 -->
+<div class="logo-card">
+  <svg width="400" height="300" viewBox="0 0 400 300">
+    <defs>
+      <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" style="stop-color:#B0DFEF"/>
+        <stop offset="25%" style="stop-color:#6CBCE0"/>
+        <stop offset="55%" style="stop-color:#3898D0"/>
+        <stop offset="85%" style="stop-color:#1A6CB5"/>
+        <stop offset="100%" style="stop-color:#0E4F8C"/>
+      </linearGradient>
+    </defs>
+
+    <g transform="translate(200,100)">
+      <!-- 球体 -->
+      <circle cx="0" cy="-62" r="22" fill="#3898D0"/>
+      <!-- ハイライト -->
+      <ellipse cx="-6" cy="-68" rx="4" ry="6" fill="#fff" opacity="0.25"/>
+
+      <!-- くびれ（球体から水面へ） -->
+      <path d="M-10,-40 C-8,-25 -20,-8 -28,0 C-15,-5 0,-7 0,-7 C0,-7 15,-5 28,0 C20,-8 8,-25 10,-40" fill="#6CBCE0"/>
+
+      <!-- 水面中央（薄め） -->
+      <ellipse cx="0" cy="0" rx="35" ry="13" fill="#B0DFEF"/>
+
+      <!-- 波紋1（中間） -->
+      <ellipse cx="0" cy="5" rx="52" ry="19" fill="none" stroke="#3898D0" stroke-width="8"/>
+
+      <!-- 波紋2（濃い） -->
+      <ellipse cx="0" cy="10" rx="75" ry="27" fill="none" stroke="#1A6CB5" stroke-width="7"/>
+    </g>
+
+    <!-- テキスト -->
+    <text x="200" y="260" text-anchor="middle" font-family="Quicksand, sans-serif" font-weight="700" font-size="60" letter-spacing="6" fill="url(#textGrad)">UMIDAS</text>
+  </svg>
+  <div class="label">シンボル + UMIDAS（縦並び）</div>
+</div>
+
+</body>
+</html>

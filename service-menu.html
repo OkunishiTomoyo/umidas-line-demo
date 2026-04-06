@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #888;
+  }
+  .menu {
+    width: 1510px;
+    height: 1000px;
+    background: linear-gradient(180deg, #f8fbff 0%, #f0f5fa 100%);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+
+  /* 薄い区切り線 */
+  .divider-v1 {
+    position: absolute;
+    top: 0;
+    left: calc(100% / 3);
+    width: 1px;
+    height: 100%;
+    background: rgba(56,152,208,0.08);
+    z-index: 2;
+  }
+  .divider-v2 {
+    position: absolute;
+    top: 0;
+    left: calc(200% / 3);
+    width: 1px;
+    height: 100%;
+    background: rgba(56,152,208,0.08);
+    z-index: 2;
+  }
+
+  .item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    padding: 40px;
+  }
+
+  /* アイコン - リッチメニューと同じ角丸四角スタイル */
+  .icon-box {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, #B0DFEF, #7DBDD8);
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px;
+    box-shadow: 0 6px 20px rgba(125,189,216,0.25);
+  }
+  .icon-box svg { width: 48px; height: 48px; }
+
+  .item-title {
+    font-size: 44px;
+    font-weight: 700;
+    color: #3898D0;
+    letter-spacing: 6px;
+    margin-bottom: 12px;
+  }
+  .item-sub {
+    font-size: 22px;
+    color: #a0c8dc;
+    letter-spacing: 2px;
+  }
+</style>
+</head>
+<body>
+  <div class="menu">
+    <div class="divider-v1"></div>
+    <div class="divider-v2"></div>
+
+    <!-- コスト削減 -->
+    <div class="item">
+      <div class="icon-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="1" x2="12" y2="23"/>
+          <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+        </svg>
+      </div>
+      <div class="item-title">コスト削減</div>
+      <div class="item-sub">厳選サービスで最適化</div>
+    </div>
+
+    <!-- リスク回避 -->
+    <div class="item">
+      <div class="icon-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+      </div>
+      <div class="item-title">リスク回避</div>
+      <div class="item-sub">経営リスクを未然に防ぐ</div>
+    </div>
+
+    <!-- フロー改善 -->
+    <div class="item">
+      <div class="icon-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+        </svg>
+      </div>
+      <div class="item-title">フロー改善</div>
+      <div class="item-sub">業務効率を最大化する</div>
+    </div>
+
+  </div>
+</body>
+</html>
