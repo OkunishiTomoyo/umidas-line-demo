@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>個人事業主向け 固定費削減事例 | UMIDAS</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@600;700&family=Noto+Sans+JP:wght@400;500;600;700;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Noto Sans JP', sans-serif; background: #f0f6ff; color: #333; }
+
+  .page { max-width: 720px; margin: 0 auto; padding: 20px 16px 60px; }
+
+  /* ヘッダー */
+  .hero { background: linear-gradient(135deg, #1A6CB5, #0E4F8C); border-radius: 20px; padding: 40px 28px; text-align: center; color: #fff; margin-bottom: 28px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 30px 30px; }
+  .hero > * { position: relative; z-index: 1; }
+  .hero .logo { font-family: 'Quicksand'; font-weight: 700; font-size: 13px; letter-spacing: 3px; color: rgba(255,255,255,0.5); margin-bottom: 12px; }
+  .hero h1 { font-size: 26px; font-weight: 900; letter-spacing: 3px; margin-bottom: 8px; }
+  .hero .sub { font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.7; }
+  .hero .highlight { display: inline-block; margin-top: 16px; background: rgba(255,255,255,0.15); padding: 10px 24px; border-radius: 12px; font-size: 20px; font-weight: 700; letter-spacing: 2px; }
+
+  /* 合計セクション */
+  .total-box { background: linear-gradient(135deg, #ff6b35, #e74c3c); border-radius: 16px; padding: 28px; text-align: center; color: #fff; margin-bottom: 28px; box-shadow: 0 8px 24px rgba(231,76,60,0.25); }
+  .total-box .label { font-size: 14px; letter-spacing: 3px; margin-bottom: 4px; }
+  .total-box .amount { font-family: 'Quicksand'; font-size: 56px; font-weight: 700; line-height: 1.1; }
+  .total-box .unit { font-size: 18px; font-weight: 500; }
+  .total-box .yearly { margin-top: 8px; font-size: 16px; color: rgba(255,255,255,0.9); }
+  .total-box .yearly span { font-family: 'Quicksand'; font-size: 28px; font-weight: 700; }
+
+  /* 事例カード */
+  .case-card { background: #fff; border-radius: 16px; padding: 24px; margin-bottom: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  .case-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .case-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+  .case-title { font-size: 18px; font-weight: 700; color: #1A6CB5; }
+  .case-subtitle { font-size: 12px; color: #999; margin-top: 2px; }
+
+  .compare { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+  .compare-box { flex: 1; padding: 14px; border-radius: 12px; text-align: center; }
+  .compare-before { background: #f5f5f5; }
+  .compare-after { background: #e8f5e9; }
+  .compare-label { font-size: 11px; font-weight: 600; color: #999; margin-bottom: 4px; letter-spacing: 1px; }
+  .compare-after .compare-label { color: #4CAF50; }
+  .compare-amount { font-family: 'Quicksand'; font-size: 28px; font-weight: 700; color: #333; }
+  .compare-after .compare-amount { color: #2e7d32; }
+  .compare-yen { font-size: 14px; font-weight: 500; }
+  .compare-detail { font-size: 11px; color: #888; margin-top: 4px; }
+  .compare-arrow { font-size: 20px; color: #1A6CB5; flex-shrink: 0; }
+
+  .saving { display: flex; gap: 10px; }
+  .saving-box { flex: 1; padding: 12px; border-radius: 12px; text-align: center; }
+  .saving-month { background: linear-gradient(135deg, #e3f2fd, #bbdefb); }
+  .saving-year { background: linear-gradient(135deg, #fff3e0, #ffe0b2); }
+  .saving-label { font-size: 11px; font-weight: 600; color: #666; margin-bottom: 2px; }
+  .saving-amount { font-family: 'Quicksand'; font-size: 24px; font-weight: 700; color: #1A6CB5; }
+  .saving-year .saving-amount { color: #e65100; }
+  .saving-yen { font-size: 12px; }
+
+  .case-note { font-size: 11px; color: #999; margin-top: 12px; padding-top: 12px; border-top: 1px solid #f0f0f0; line-height: 1.6; }
+
+  /* CTA */
+  .cta { background: linear-gradient(135deg, #1A6CB5, #0E4F8C); border-radius: 16px; padding: 28px; text-align: center; color: #fff; }
+  .cta h3 { font-size: 20px; margin-bottom: 8px; letter-spacing: 2px; }
+  .cta p { font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 20px; line-height: 1.6; }
+  .cta-btn { display: inline-block; padding: 14px 40px; background: #fff; color: #1A6CB5; border-radius: 12px; font-size: 16px; font-weight: 700; letter-spacing: 3px; text-decoration: none; box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="hero">
+    <div class="logo">UMIDAS</div>
+    <h1>個人事業主の固定費削減</h1>
+    <div class="sub">毎月の固定費、見直すだけでこんなに変わります。<br>初期費用・成果報酬は一切いただきません。</div>
+    <div class="highlight">6項目の削減事例</div>
+  </div>
+
+  <!-- 合計削減額 -->
+  <div class="total-box">
+    <div class="label">6項目合計の削減額</div>
+    <div class="amount">42,948<span class="unit"> 円/月</span></div>
+    <div class="yearly">年間 <span>515,376</span> 円の削減</div>
+  </div>
+
+  <!-- 1. 携帯代 -->
+  <div class="case-card">
+    <div class="case-header">
+      <div class="case-icon" style="background:linear-gradient(135deg,#e3f2fd,#bbdefb);">📱</div>
+      <div>
+        <div class="case-title">携帯代</div>
+        <div class="case-subtitle">大手キャリア → 最適プラン見直し</div>
+      </div>
+    </div>
+    <div class="compare">
+      <div class="compare-box compare-before">
+        <div class="compare-label">BEFORE</div>
+        <div class="compare-amount">8,760<span class="compare-yen">円</span></div>
+        <div class="compare-detail">大手キャリア+機種代+オプション</div>
+      </div>
+      <div class="compare-arrow">→</div>
+      <div class="compare-box compare-after">
+        <div class="compare-label">AFTER</div>
+        <div class="compare-amount">3,842<span class="compare-yen">円</span></div>
+        <div class="compare-detail">キャリアそのまま+割引最適化</div>
+      </div>
+    </div>
+    <div class="saving">
+      <div class="saving-box saving-month">
+        <div class="saving-label">月の削減額</div>
+        <div class="saving-amount">4,918<span class="saving-yen">円</span></div>
+      </div>
+      <div class="saving-box saving-year">
+        <div class="saving-label">年間の削減額</div>
+        <div class="saving-amount">58,976<span class="saving-yen">円</span></div>
+      </div>
+    </div>
+    <div class="case-note">キャリアを変えずに割引を最適化。不要なオプション・サブスクを整理し、機種代も見直し。無制限プラン/回線スピードはそのまま維持。</div>
+  </div>
+
+  <!-- 2. 電気代 -->
+  <div class="case-card">
+    <div class="case-header">
+      <div class="case-icon" style="background:linear-gradient(135deg,#fff9c4,#fff176);">⚡</div>
+      <div>
+        <div class="case-title">電気代</div>
+        <div class="case-subtitle">東京電力 → オクトパスエナジー</div>
+      </div>
+    </div>
+    <div class="compare">
+      <div class="compare-box compare-before">
+        <div class="compare-label">BEFORE</div>
+        <div class="compare-amount">13,471<span class="compare-yen">円</span></div>
+        <div class="compare-detail">東京電力 スマートライフS</div>
+      </div>
+      <div class="compare-arrow">→</div>
+      <div class="compare-box compare-after">
+        <div class="compare-label">AFTER</div>
+        <div class="compare-amount">10,012<span class="compare-yen">円</span></div>
+        <div class="compare-detail">オクトパスエナジー</div>
+      </div>
+    </div>
+    <div class="saving">
+      <div class="saving-box saving-month">
+        <div class="saving-label">月の削減額</div>
+        <div class="saving-amount">3,459<span class="saving-yen">円</span></div>
+      </div>
+      <div class="saving-box saving-year">
+        <div class="saving-label">年間の削減額</div>
+        <div class="saving-amount">41,508<span class="saving-yen">円</span></div>
+      </div>
+    </div>
+    <div class="case-note">切り替え手続きはWebで完結。工事不要・解約金なし。再生可能エネルギー100%でCO2排出実質ゼロ。電気量料金の単価が全段階で安い。</div>
+  </div>
+
+  <!-- 3. ガス代（プロパン） -->
+  <div class="case-card">
+    <div class="case-header">
+      <div class="case-icon" style="background:linear-gradient(135deg,#fce4ec,#f48fb1);">🔥</div>
+      <div>
+        <div class="case-title">ガス代（プロパン）</div>
+        <div class="case-subtitle">割高プロパン → 適正価格に交渉</div>
+      </div>
+    </div>
+    <div class="compare">
+      <div class="compare-box compare-before">
+        <div class="compare-label">BEFORE</div>
+        <div class="compare-amount">12,800<span class="compare-yen">円</span></div>
+        <div class="compare-detail">地域プロパンガス業者（従量650円/m3）</div>
+      </div>
+      <div class="compare-arrow">→</div>
+      <div class="compare-box compare-after">
+        <div class="compare-label">AFTER</div>
+        <div class="compare-amount">7,500<span class="compare-yen">円</span></div>
+        <div class="compare-detail">適正価格ガス会社（従量380円/m3）</div>
+      </div>
+    </div>
+    <div class="saving">
+      <div class="saving-box saving-month">
+        <div class="saving-label">月の削減額</div>
+        <div class="saving-amount">5,300<span class="saving-yen">円</span></div>
+      </div>
+      <div class="saving-box saving-year">
+        <div class="saving-label">年間の削減額</div>
+        <div class="saving-amount">63,600<span class="saving-yen">円</span></div>
+      </div>
+    </div>
+    <div class="case-note">プロパンガスは地域・業者で最大2倍の価格差。プロパンガス料金適正化協会と連携し、値下げ交渉または優良ガス会社への切り替えをサポート。切替費用は原則無料。</div>
+  </div>
+
+  <!-- 4. Wi-Fi -->
+  <div class="case-card">
+    <div class="case-header">
+      <div class="case-icon" style="background:linear-gradient(135deg,#e8eaf6,#9fa8da);">📡</div>
+      <div>
+        <div class="case-title">Wi-Fi（インターネット）</div>
+        <div class="case-subtitle">戸建て SoftBank光 → NURO光</div>
+      </div>
+    </div>
+    <div class="compare">
+      <div class="compare-box compare-before">
+        <div class="compare-label">BEFORE</div>
+        <div class="compare-amount">5,720<span class="compare-yen">円</span></div>
+        <div class="compare-detail">SoftBank光 戸建てプラン</div>
+      </div>
+      <div class="compare-arrow">→</div>
+      <div class="compare-box compare-after">
+        <div class="compare-label">AFTER</div>
+        <div class="compare-amount">3,850<span class="compare-yen">円</span></div>
+        <div class="compare-detail">NURO光 戸建てプラン</div>
+      </div>
+    </div>
+    <div class="saving">
+      <div class="saving-box saving-month">
+        <div class="saving-label">月の削減額</div>
+        <div class="saving-amount">1,870<span class="saving-yen">円</span></div>
+      </div>
+      <div class="saving-box saving-year">
+        <div class="saving-label">年間の削減額</div>
+        <div class="saving-amount">22,440<span class="saving-yen">円</span></div>
+      </div>
+    </div>
+    <div class="case-note">回線速度は下り最大2Gbpsに向上。工事費実質無料キャンペーン適用。さらに最大6万円現金キャッシュバックあり（実質初年度は大幅プラス）。</div>
+  </div>
+
+  <!-- 5. 国民健康保険料 -->
+  <div class="case-card">
+    <div class="case-header">
+      <div class="case-icon" style="background:linear-gradient(135deg,#e8f5e9,#81c784);">🏥</div>
+      <div>
+        <div class="case-title">国民健康保険料</div>
+        <div class="case-subtitle">マイクロ法人設立で社会保険に切替</div>
+      </div>
+    </div>
+    <div class="compare">
+      <div class="compare-box compare-before">
+        <div class="compare-label">BEFORE</div>
+        <div class="compare-amount">45,000<span class="compare-yen">円</span></div>
+        <div class="compare-detail">国保+国民年金（年収600万の場合）</div>
+      </div>
+      <div class="compare-arrow">→</div>
+      <div class="compare-box compare-after">
+        <div class="compare-label">AFTER</div>
+        <div class="compare-amount">24,000<span class="compare-yen">円</span></div>
+        <div class="compare-detail">社会保険（最低報酬月額で加入）</div>
+      </div>
+    </div>
+    <div class="saving">
+      <div class="saving-box saving-month">
+        <div class="saving-label">月の削減額</div>
+        <div class="saving-amount">21,000<span class="saving-yen">円</span></div>
+      </div>
+      <div class="saving-box saving-year">
+        <div class="saving-label">年間の削減額</div>
+        <div class="saving-amount">252,000<span class="saving-yen">円</span></div>
+      </div>
+    </div>
+    <div class="case-note">マイクロ法人を設立し、最低報酬月額で社会保険に加入することで国保料を大幅削減。扶養制度も活用可能に。個人事業はそのまま継続できます。※税理士と連携してサポート。</div>
+  </div>
+
+  <!-- 6. ガソリン代 -->
+  <div class="case-card">
+    <div class="case-header">
+      <div class="case-icon" style="background:linear-gradient(135deg,#fff3e0,#ffcc80);">⛽</div>
+      <div>
+        <div class="case-title">ガソリン代</div>
+        <div class="case-subtitle">法人カード活用で給油コスト削減</div>
+      </div>
+    </div>
+    <div class="compare">
+      <div class="compare-box compare-before">
+        <div class="compare-label">BEFORE</div>
+        <div class="compare-amount">20,000<span class="compare-yen">円</span></div>
+        <div class="compare-detail">一般価格で給油（170円/L x 月120L）</div>
+      </div>
+      <div class="compare-arrow">→</div>
+      <div class="compare-box compare-after">
+        <div class="compare-label">AFTER</div>
+        <div class="compare-amount">13,599<span class="compare-yen">円</span></div>
+        <div class="compare-detail">法人カード割引+ポイント還元2%</div>
+      </div>
+    </div>
+    <div class="saving">
+      <div class="saving-box saving-month">
+        <div class="saving-label">月の削減額</div>
+        <div class="saving-amount">6,401<span class="saving-yen">円</span></div>
+      </div>
+      <div class="saving-box saving-year">
+        <div class="saving-label">年間の削減額</div>
+        <div class="saving-amount">76,852<span class="saving-yen">円</span></div>
+      </div>
+    </div>
+    <div class="case-note">法人カード（最大2.0%還元）+ 提携スタンド割引で1Lあたり約7円OFF。ETCも同カードで高速代もポイント還元対象。全額経費計上可能。</div>
+  </div>
+
+  <!-- 合計まとめ -->
+  <div class="total-box">
+    <div class="label">6項目すべて見直した場合</div>
+    <div class="amount">42,948<span class="unit"> 円/月</span></div>
+    <div class="yearly">年間 <span>515,376</span> 円の削減</div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta">
+    <h3>まずは無料診断から</h3>
+    <p>あなたの固定費、いくら削減できるか<br>3分でわかる鉄壁診断をお試しください。<br>初期費用・成果報酬は一切いただきません。</p>
+    <a href="https://okunishitomoyo.github.io/umidas-line-demo/teppeki.html" class="cta-btn">鉄壁診断を受ける</a>
+  </div>
+
+</div>
+
+</body>
+</html>
