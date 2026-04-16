@@ -170,52 +170,126 @@
 </div>
 
 <script>
-// 企業番号マッピング
-const companyNumbers = {
-  "ApoLink / SCORE X": 1,
-  "バリューイノベーション": 2,
-  "月兎ソース": 3,
-  "エクセルリンク / GOEN": 4,
-  "ナナ文具（ASKUL代理店）": 5,
-  "Sanyo Logistics": 6,
-  "y-Doc": 7,
-  "ヒトミー": 8,
-  "アクトプロ": 9,
-  "Aitane": 10,
-  "日本国際貿易センター": 11,
-  "AIDホールディングス": 12,
-  "経営トータルサポート": 13,
-  "カスタマークラウド": 14,
-  "EXE Partnerz": 15,
-  "アラームボックス": 16,
-  "UMIDAS": 17,
-};
+// ============================================
+// GAS URL
+// ============================================
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbzstLJwDbvlUCasAPCDaFi9CaA57ok_znD43T6OwRFrG_iX8CoZz0MNxAZVz1RpHJIX/exec';
 
-const questions = [
-  { q: "新規顧客の獲得に、効率的なリード獲得の仕組みがありますか？", hint: "テレアポや飛び込み以外に、決裁者に直接アプローチできる手段があるか", cat: "cost", company: "ApoLink / SCORE X", solution: "リード獲得プラットフォームの導入" },
-  { q: "複合機（コピー機）の印刷コストを過去1年以内に見直しましたか？", hint: "カウンター料金やリース料金を他社と比較していますか", cat: "cost", company: "バリューイノベーション", solution: "複合機コストの最適化提案" },
-  { q: "食材・食品の仕入れコストを定期的に見直していますか？", hint: "飲食店・食品関連企業の場合、仕入れ先の比較検討を行っているか", cat: "cost", company: "月兎ソース", solution: "食品仕入れコストの最適化" },
-  { q: "損害保険の契約内容を過去2年以内に見直しましたか？", hint: "火災保険・賠償責任保険等の補償内容と保険料が適正か確認していますか", cat: "cost", company: "エクセルリンク / GOEN", solution: "損害保険プランの最適化" },
-  { q: "オフィス用品・消耗品の購入コストを最適化していますか？", hint: "文房具やコピー用紙などを最安値で購入できる仕組みがあるか", cat: "cost", company: "ナナ文具（ASKUL代理店）", solution: "オフィス用品の調達コスト削減" },
-  { q: "物流・輸送・貿易のコストを定期的に見直していますか？", hint: "配送料や通関費用などを他社と比較検討していますか", cat: "cost", company: "Sanyo Logistics", solution: "物流・貿易コストの最適化" },
-  { q: "店舗やサービスの集客に、効果的なWeb施策を導入していますか？", hint: "MEO対策・口コミ管理・Web広告など、デジタル集客ができていますか", cat: "cost", company: "y-Doc", solution: "飲食店・店舗のデジタル集客支援" },
-  { q: "採用活動において、効率的な母集団形成の手段がありますか？", hint: "求人媒体の費用対効果を把握し、ターゲットに合った採用チャネルがあるか", cat: "cost", company: "ヒトミー", solution: "採用プラットフォームの最適化" },
-  { q: "オフィスや店舗の家賃を過去3年以内に交渉・見直ししましたか？", hint: "賃料相場と比較して適正な賃料を支払っているか把握していますか", cat: "cost", company: "アクトプロ", solution: "家賃の適正化コンサルティング" },
-  { q: "電力会社の契約を見直し、最適な電力プランを選択していますか？", hint: "大手電力や新電力の比較検討を行いましたか", cat: "cost", company: "アクトプロ", solution: "電力コストの削減提案" },
-  { q: "顧客管理（CRM）を効率的に行えるシステムを導入していますか？", hint: "顧客情報や営業進捗をExcelではなく、専用システムで管理しているか", cat: "cost", company: "Aitane", solution: "AI搭載CRMの導入" },
-  { q: "海外からの資材・原材料の調達ルートを最適化していますか？", hint: "中間マージンの削減や、より有利な調達先の開拓ができているか", cat: "cost", company: "日本国際貿易センター", solution: "国際調達ルートの最適化" },
-  { q: "自社名でネット検索した際に、ネガティブな情報が表示されていませんか？", hint: "「〇〇会社 やばい」「〇〇会社 評判」などで悪い情報が出ていないか確認していますか", cat: "risk", company: "AIDホールディングス", solution: "風評被害モニタリング・対策" },
-  { q: "労務トラブル（残業・ハラスメント・退職等）への相談体制がありますか？", hint: "社労士や労務の専門家にすぐ相談できる体制が整っていますか", cat: "risk", company: "経営トータルサポート", solution: "社労士による労務管理サポート" },
-  { q: "情報セキュリティ対策（ウイルス・不正アクセス・情報漏洩）は万全ですか？", hint: "セキュリティソフトの導入だけでなく、社内ルールや教育が整備されているか", cat: "risk", company: "カスタマークラウド", solution: "セキュリティシステムの構築" },
-  { q: "税務リスクに対して、定期的に専門家（税理士）のチェックを受けていますか？", hint: "節税対策や税務調査への備えが十分にできていますか", cat: "risk", company: "EXE Partnerz", solution: "税務コンサルティング" },
-  { q: "取引先の信用調査を行い、売掛金の未回収リスクに備えていますか？", hint: "新規取引先の与信管理や、売掛金の保証サービスを利用していますか", cat: "risk", company: "アラームボックス", solution: "AI与信管理・売掛金保証" },
-  { q: "上記すべてを横断的に見直す「経営基盤の定期点検」を実施していますか？", hint: "コスト・リスクの総合的な見直しを年1回以上行っていますか", cat: "risk", company: "UMIDAS", solution: "経営基盤の総合診断・改善提案" },
+// ============================================
+// デフォルト値（GASから設定を取得できない場合に使用）
+// ============================================
+const defaultQuestions = [
+  { q: "新規顧客の獲得に、効率的なリード獲得の仕組みがありますか？", hint: "テレアポや飛び込み以外に、決裁者に直接アプローチできる手段があるか", cat: "cost", company: "ApoLink / SCORE X", solution: "リード獲得プラットフォームの導入", number: 1 },
+  { q: "複合機（コピー機）の印刷コストを過去1年以内に見直しましたか？", hint: "カウンター料金やリース料金を他社と比較していますか", cat: "cost", company: "バリューイノベーション", solution: "複合機コストの最適化提案", number: 2 },
+  { q: "食材・食品の仕入れコストを定期的に見直していますか？", hint: "飲食店・食品関連企業の場合、仕入れ先の比較検討を行っているか", cat: "cost", company: "月兎ソース", solution: "食品仕入れコストの最適化", number: 3 },
+  { q: "損害保険の契約内容を過去2年以内に見直しましたか？", hint: "火災保険・賠償責任保険等の補償内容と保険料が適正か確認していますか", cat: "cost", company: "エクセルリンク / GOEN", solution: "損害保険プランの最適化", number: 4 },
+  { q: "オフィス用品・消耗品の購入コストを最適化していますか？", hint: "文房具やコピー用紙などを最安値で購入できる仕組みがあるか", cat: "cost", company: "ナナ文具（ASKUL代理店）", solution: "オフィス用品の調達コスト削減", number: 5 },
+  { q: "物流・輸送・貿易のコストを定期的に見直していますか？", hint: "配送料や通関費用などを他社と比較検討していますか", cat: "cost", company: "Sanyo Logistics", solution: "物流・貿易コストの最適化", number: 6 },
+  { q: "店舗やサービスの集客に、効果的なWeb施策を導入していますか？", hint: "MEO対策・口コミ管理・Web広告など、デジタル集客ができていますか", cat: "cost", company: "y-Doc", solution: "飲食店・店舗のデジタル集客支援", number: 7 },
+  { q: "採用活動において、効率的な母集団形成の手段がありますか？", hint: "求人媒体の費用対効果を把握し、ターゲットに合った採用チャネルがあるか", cat: "cost", company: "ヒトミー", solution: "採用プラットフォームの最適化", number: 8 },
+  { q: "オフィスや店舗の家賃を過去3年以内に交渉・見直ししましたか？", hint: "賃料相場と比較して適正な賃料を支払っているか把握していますか", cat: "cost", company: "アクトプロ", solution: "家賃の適正化コンサルティング", number: 9 },
+  { q: "電力会社の契約を見直し、最適な電力プランを選択していますか？", hint: "大手電力や新電力の比較検討を行いましたか", cat: "cost", company: "アクトプロ", solution: "電力コストの削減提案", number: 10 },
+  { q: "顧客管理（CRM）を効率的に行えるシステムを導入していますか？", hint: "顧客情報や営業進捗をExcelではなく、専用システムで管理しているか", cat: "cost", company: "Aitane", solution: "AI搭載CRMの導入", number: 11 },
+  { q: "海外からの資材・原材料の調達ルートを最適化していますか？", hint: "中間マージンの削減や、より有利な調達先の開拓ができているか", cat: "cost", company: "日本国際貿易センター", solution: "国際調達ルートの最適化", number: 12 },
+  { q: "自社名でネット検索した際に、ネガティブな情報が表示されていませんか？", hint: "「〇〇会社 やばい」「〇〇会社 評判」などで悪い情報が出ていないか確認していますか", cat: "risk", company: "AIDホールディングス", solution: "風評被害モニタリング・対策", number: 13 },
+  { q: "労務トラブル（残業・ハラスメント・退職等）への相談体制がありますか？", hint: "社労士や労務の専門家にすぐ相談できる体制が整っていますか", cat: "risk", company: "経営トータルサポート", solution: "社労士による労務管理サポート", number: 14 },
+  { q: "情報セキュリティ対策（ウイルス・不正アクセス・情報漏洩）は万全ですか？", hint: "セキュリティソフトの導入だけでなく、社内ルールや教育が整備されているか", cat: "risk", company: "カスタマークラウド", solution: "セキュリティシステムの構築", number: 15 },
+  { q: "税務リスクに対して、定期的に専門家（税理士）のチェックを受けていますか？", hint: "節税対策や税務調査への備えが十分にできていますか", cat: "risk", company: "EXE Partnerz", solution: "税務コンサルティング", number: 16 },
+  { q: "取引先の信用調査を行い、売掛金の未回収リスクに備えていますか？", hint: "新規取引先の与信管理や、売掛金の保証サービスを利用していますか", cat: "risk", company: "アラームボックス", solution: "AI与信管理・売掛金保証", number: 17 },
+  { q: "上記すべてを横断的に見直す「経営基盤の定期点検」を実施していますか？", hint: "コスト・リスクの総合的な見直しを年1回以上行っていますか", cat: "risk", company: "UMIDAS", solution: "経営基盤の総合診断・改善提案", number: 18 }
 ];
 
-const answers = new Array(questions.length).fill(null);
+const defaultReps = [
+  { name: "ウエノツヨシ", email: "ueno.tsuyoshi@umidas.group" },
+  { name: "クマガイリュウショウ", email: "kumagai.ryusho@umidas.group" },
+  { name: "イバラギヒカル", email: "ibaragi.hikaru@umidas.group" },
+  { name: "カネモトトモハル", email: "kanemoto.tomoharu@umidas.group" },
+  { name: "ワタナベタイト", email: "watanabe.taito@umidas.group" }
+];
+
+// ============================================
+// 状態
+// ============================================
+let questions = [];
+let reps = [];
+let generalConfig = {};
+let answers = [];
 let selectedRep = null;
 let selectedRepName = null;
 let customerName = null;
+
+// ============================================
+// 初期化：GASから設定を取得して画面を構築
+// ============================================
+function initApp() {
+  fetch(GAS_URL + '?action=getConfig')
+    .then(r => r.json())
+    .then(data => {
+      if (data.status === 'ok' && data.config) {
+        questions = data.config.questions || defaultQuestions;
+        reps = data.config.reps || defaultReps;
+        generalConfig = data.config.general || {};
+        applyGeneralConfig();
+      } else {
+        questions = defaultQuestions;
+        reps = defaultReps;
+      }
+      buildPage();
+    })
+    .catch(() => {
+      questions = defaultQuestions;
+      reps = defaultReps;
+      buildPage();
+    });
+}
+
+function applyGeneralConfig() {
+  const g = generalConfig;
+  if (g.title) document.querySelector('.header h1').textContent = g.title;
+  if (g.subtitle || g.subtitle2) {
+    const p = document.querySelector('.header p');
+    p.innerHTML = (g.subtitle || '') + '<br>' + (g.subtitle2 || '');
+  }
+  if (g.intro) document.getElementById('intro').innerHTML = g.intro;
+}
+
+function buildPage() {
+  answers = new Array(questions.length).fill(null);
+
+  // 営業マンプルダウン構築
+  const repSelect = document.getElementById('rep-select');
+  repSelect.innerHTML = '<option value="">選択してください</option>';
+  reps.forEach(r => {
+    const opt = document.createElement('option');
+    opt.value = r.email;
+    opt.textContent = r.name;
+    repSelect.appendChild(opt);
+  });
+
+  // 質問カード生成
+  const qContainer = document.getElementById('questions');
+  qContainer.innerHTML = '';
+  questions.forEach((q, i) => {
+    const catClass = q.cat === 'cost' ? 'cat-cost' : 'cat-risk';
+    const catLabel = q.cat === 'cost' ? 'コスト削減' : 'リスク回避';
+    const num = q.number || (i + 1);
+    qContainer.innerHTML += `
+      <div class="question-card" id="qcard-${i}">
+        <div class="q-number">Q${i+1} <span style="color:#1A6CB5;font-size:11px;">（No.${num}）</span></div>
+        <span class="q-category ${catClass}">${catLabel}</span>
+        <div class="q-text">${q.q}</div>
+        <div class="q-hint">${q.hint}</div>
+        <div class="btn-group">
+          <button class="btn-answer" id="btn-${i}-yes" onclick="answer(${i}, 'yes')">はい ✓</button>
+          <button class="btn-answer" id="btn-${i}-no" onclick="answer(${i}, 'no')">いいえ ✗</button>
+          <button class="btn-answer" id="btn-${i}-na" onclick="answer(${i}, 'na')">対象外</button>
+        </div>
+      </div>`;
+  });
+
+  // プログレステキスト更新
+  document.getElementById('progress-text').textContent = `0 / ${questions.length}`;
+}
 
 // 担当選択（プルダウン）
 function selectRep() {
@@ -224,26 +298,6 @@ function selectRep() {
   selectedRepName = sel.value ? sel.options[sel.selectedIndex].text : null;
   checkSubmitReady();
 }
-
-// 質問カード生成
-const qContainer = document.getElementById('questions');
-questions.forEach((q, i) => {
-  const catClass = q.cat === 'cost' ? 'cat-cost' : 'cat-risk';
-  const catLabel = q.cat === 'cost' ? 'コスト削減' : 'リスク回避';
-  const num = companyNumbers[q.company] || '';
-  qContainer.innerHTML += `
-    <div class="question-card" id="qcard-${i}">
-      <div class="q-number">Q${i+1} <span style="color:#1A6CB5;font-size:11px;">（No.${num}）</span></div>
-      <span class="q-category ${catClass}">${catLabel}</span>
-      <div class="q-text">${q.q}</div>
-      <div class="q-hint">${q.hint}</div>
-      <div class="btn-group">
-        <button class="btn-answer" id="btn-${i}-yes" onclick="answer(${i}, 'yes')">はい ✓</button>
-        <button class="btn-answer" id="btn-${i}-no" onclick="answer(${i}, 'no')">いいえ ✗</button>
-        <button class="btn-answer" id="btn-${i}-na" onclick="answer(${i}, 'na')">対象外</button>
-      </div>
-    </div>`;
-});
 
 function answer(idx, val) {
   answers[idx] = val;
@@ -306,7 +360,7 @@ function showResult() {
   weakList.innerHTML = '';
   questions.forEach((q, i) => {
     if (answers[i] === 'no') {
-      const num = companyNumbers[q.company] || '?';
+      const num = q.number || (i + 1);
       weakList.innerHTML += `
         <div class="weakness-item">
           <div class="weakness-num">${num}</div>
@@ -323,6 +377,13 @@ function showResult() {
     weakList.innerHTML = '<div style="text-align:center;padding:20px;color:#4CAF50;font-weight:700;">すべての項目をクリアしています！素晴らしい経営基盤です。</div>';
   }
 
+  // CTA更新（管理者設定があれば反映）
+  if (generalConfig.ctaTitle) document.querySelector('.cta-box h3').textContent = generalConfig.ctaTitle;
+  if (generalConfig.ctaDesc) document.querySelector('.cta-box p').innerHTML = generalConfig.ctaDesc;
+  if (generalConfig.lineUrl) {
+    document.querySelectorAll('.cta-box a').forEach(a => { a.href = generalConfig.lineUrl; });
+  }
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -331,7 +392,8 @@ function sendToSheet(score, rank) {
   const weakItems = [];
   questions.forEach((q, i) => {
     if (answers[i] === 'no') {
-      weakItems.push(`No.${companyNumbers[q.company]} ${q.solution}（${q.company}）`);
+      const num = q.number || (i + 1);
+      weakItems.push(`No.${num} ${q.solution}（${q.company}）`);
     }
   });
 
@@ -346,23 +408,21 @@ function sendToSheet(score, rank) {
     answers: answers.map((a, i) => `Q${i+1}:${a}`).join(', ')
   };
 
-  // Google Apps ScriptのURLをここに設定
-  const GAS_URL = 'https://script.google.com/macros/s/AKfycbzstLJwDbvlUCasAPCDaFi9CaA57ok_znD43T6OwRFrG_iX8CoZz0MNxAZVz1RpHJIX/exec';
-
-  if (GAS_URL !== 'YOUR_GAS_WEBHOOK_URL') {
-    document.getElementById('loading').style.display = 'flex';
-    fetch(GAS_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    }).then(() => {
-      document.getElementById('loading').style.display = 'none';
-    }).catch(() => {
-      document.getElementById('loading').style.display = 'none';
-    });
-  }
+  document.getElementById('loading').style.display = 'flex';
+  fetch(GAS_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  }).then(() => {
+    document.getElementById('loading').style.display = 'none';
+  }).catch(() => {
+    document.getElementById('loading').style.display = 'none';
+  });
 }
+
+// ページ読み込み時に初期化
+initApp();
 </script>
 
 </body>

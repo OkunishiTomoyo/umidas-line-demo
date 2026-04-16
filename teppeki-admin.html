@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>鉄壁診断 管理者画面 | UMIDAS</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@600;700&family=Noto+Sans+JP:wght@400;500;600;700;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Noto Sans JP', sans-serif; background: #f0f2f5; min-height: 100vh; color: #333; }
+
+  /* ログイン画面 */
+  .login-screen { display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+  .login-box { background: #fff; border-radius: 16px; padding: 40px; max-width: 400px; width: 100%; box-shadow: 0 4px 24px rgba(0,0,0,0.1); text-align: center; }
+  .login-box .logo { font-family: 'Quicksand'; font-weight: 700; font-size: 14px; letter-spacing: 3px; color: #1A6CB5; margin-bottom: 8px; }
+  .login-box h1 { font-size: 24px; font-weight: 900; color: #0E4F8C; margin-bottom: 24px; }
+  .login-box .shield { font-size: 48px; margin-bottom: 12px; }
+  .login-input { display: block; width: 100%; padding: 14px; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 15px; font-family: 'Noto Sans JP', sans-serif; margin-bottom: 12px; transition: border-color 0.2s; }
+  .login-input:focus { outline: none; border-color: #1A6CB5; }
+  .login-btn { display: block; width: 100%; padding: 16px; background: linear-gradient(135deg, #1A6CB5, #0E4F8C); border: none; border-radius: 12px; color: #fff; font-size: 16px; font-weight: 700; cursor: pointer; letter-spacing: 2px; }
+  .login-btn:hover { opacity: 0.9; }
+  .login-error { color: #f44336; font-size: 13px; margin-top: 8px; display: none; }
+
+  /* 管理画面 */
+  .admin-screen { display: none; }
+  .admin-header { background: linear-gradient(135deg, #1A6CB5, #0E4F8C); padding: 20px 24px; color: #fff; display: flex; justify-content: space-between; align-items: center; }
+  .admin-header h1 { font-size: 20px; font-weight: 700; letter-spacing: 2px; }
+  .admin-header .logout-btn { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 13px; }
+  .admin-header .logout-btn:hover { background: rgba(255,255,255,0.25); }
+
+  .admin-body { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+
+  /* タブ */
+  .tab-nav { display: flex; gap: 4px; margin-bottom: 24px; overflow-x: auto; }
+  .tab-btn { padding: 12px 20px; border: none; background: #fff; border-radius: 12px 12px 0 0; font-size: 14px; font-weight: 600; color: #888; cursor: pointer; white-space: nowrap; border-bottom: 3px solid transparent; }
+  .tab-btn.active { color: #1A6CB5; border-bottom-color: #1A6CB5; background: #fff; }
+  .tab-btn:hover { color: #1A6CB5; }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* カード */
+  .card { background: #fff; border-radius: 16px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .card h3 { font-size: 16px; color: #1A6CB5; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  .card-desc { font-size: 13px; color: #888; margin-bottom: 16px; }
+
+  /* フォーム要素 */
+  .form-group { margin-bottom: 16px; }
+  .form-label { display: block; font-size: 13px; font-weight: 600; color: #555; margin-bottom: 6px; }
+  .form-input, .form-textarea, .form-select { display: block; width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 14px; font-family: 'Noto Sans JP', sans-serif; color: #333; transition: border-color 0.2s; }
+  .form-input:focus, .form-textarea:focus, .form-select:focus { outline: none; border-color: #1A6CB5; }
+  .form-textarea { min-height: 80px; resize: vertical; }
+
+  /* ボタン */
+  .btn { padding: 10px 20px; border: none; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; transition: opacity 0.2s; }
+  .btn:hover { opacity: 0.85; }
+  .btn-primary { background: #1A6CB5; color: #fff; }
+  .btn-success { background: #4CAF50; color: #fff; }
+  .btn-danger { background: #f44336; color: #fff; }
+  .btn-outline { background: #fff; color: #1A6CB5; border: 2px solid #1A6CB5; }
+  .btn-sm { padding: 6px 14px; font-size: 12px; }
+
+  /* 質問リスト */
+  .q-item { border: 1px solid #e8e8e8; border-radius: 12px; padding: 16px; margin-bottom: 12px; position: relative; }
+  .q-item .q-num { font-family: 'Quicksand'; font-weight: 700; font-size: 13px; color: #1A6CB5; margin-bottom: 8px; }
+  .q-item .q-actions { position: absolute; top: 12px; right: 12px; display: flex; gap: 6px; }
+  .q-cat-badge { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 8px; margin-bottom: 8px; }
+  .q-cat-cost { background: rgba(176,223,239,0.2); color: #1A6CB5; }
+  .q-cat-risk { background: rgba(26,108,181,0.08); color: #0E4F8C; }
+
+  /* 営業マンリスト */
+  .rep-item { display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px solid #e8e8e8; border-radius: 10px; margin-bottom: 8px; }
+  .rep-item .rep-name { font-weight: 600; flex: 1; }
+  .rep-item .rep-email { color: #888; font-size: 13px; flex: 1; }
+
+  /* 結果テーブル */
+  .results-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .results-table th { background: #f5f5f5; padding: 10px 8px; text-align: left; font-weight: 600; border-bottom: 2px solid #e0e0e0; white-space: nowrap; }
+  .results-table td { padding: 10px 8px; border-bottom: 1px solid #f0f0f0; }
+  .results-table tr:hover { background: #fafafa; }
+  .score-badge { display: inline-block; padding: 2px 10px; border-radius: 8px; font-weight: 700; font-size: 12px; color: #fff; }
+
+  /* モーダル */
+  .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
+  .modal-overlay.show { display: flex; }
+  .modal { background: #fff; border-radius: 16px; padding: 32px; max-width: 600px; width: 100%; max-height: 80vh; overflow-y: auto; }
+  .modal h3 { font-size: 18px; color: #1A6CB5; margin-bottom: 20px; }
+  .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+
+  /* トースト */
+  .toast { position: fixed; bottom: 24px; right: 24px; background: #333; color: #fff; padding: 14px 24px; border-radius: 12px; font-size: 14px; font-weight: 600; z-index: 2000; display: none; animation: slideUp 0.3s ease; }
+  .toast.show { display: block; }
+  .toast.success { background: #4CAF50; }
+  .toast.error { background: #f44336; }
+  @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+  /* ローディング */
+  .loading { text-align: center; padding: 40px; color: #888; }
+  .spinner { width: 32px; height: 32px; border: 3px solid #e0e0e0; border-top: 3px solid #1A6CB5; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 12px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* 編集中ハイライト */
+  .editing { border-color: #1A6CB5; background: #f8fbff; }
+
+  /* レスポンシブ */
+  @media (max-width: 600px) {
+    .tab-btn { padding: 10px 14px; font-size: 12px; }
+    .rep-item { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .results-table { font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ログイン画面 -->
+<div class="login-screen" id="login-screen">
+  <div class="login-box">
+    <div class="logo">UMIDAS</div>
+    <div class="shield">🛡️</div>
+    <h1>鉄壁診断 管理者画面</h1>
+    <input type="text" class="login-input" id="login-id" placeholder="管理者ID" autocomplete="username">
+    <input type="password" class="login-input" id="login-pass" placeholder="パスワード" autocomplete="current-password"
+      onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">ログイン</button>
+    <div class="login-error" id="login-error">IDまたはパスワードが違います</div>
+  </div>
+</div>
+
+<!-- 管理画面 -->
+<div class="admin-screen" id="admin-screen">
+  <div class="admin-header">
+    <h1>鉄壁診断 管理者画面</h1>
+    <button class="logout-btn" onclick="doLogout()">ログアウト</button>
+  </div>
+
+  <div class="admin-body">
+    <div class="tab-nav">
+      <button class="tab-btn active" onclick="switchTab('general')">基本設定</button>
+      <button class="tab-btn" onclick="switchTab('questions')">質問管理</button>
+      <button class="tab-btn" onclick="switchTab('reps')">営業マン管理</button>
+      <button class="tab-btn" onclick="switchTab('results')">回答結果</button>
+    </div>
+
+    <!-- 基本設定タブ -->
+    <div class="tab-content active" id="tab-general">
+      <div class="card">
+        <h3>ページタイトル・ヘッダー</h3>
+        <div class="form-group">
+          <label class="form-label">診断タイトル</label>
+          <input type="text" class="form-input" id="cfg-title" value="鉄壁診断">
+        </div>
+        <div class="form-group">
+          <label class="form-label">サブタイトル</label>
+          <input type="text" class="form-input" id="cfg-subtitle" value="あなたの会社の経営基盤は盤石ですか？">
+        </div>
+        <div class="form-group">
+          <label class="form-label">説明文（2行目）</label>
+          <input type="text" class="form-input" id="cfg-subtitle2" value="18の質問で脆弱性を診断します">
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>イントロ文</h3>
+        <div class="form-group">
+          <label class="form-label">診断ページ冒頭の説明文（HTMLタグ使用可）</label>
+          <textarea class="form-textarea" id="cfg-intro" rows="5">この診断では、<strong>コスト最適化</strong>と<strong>リスク対策</strong>の2つの観点から、企業の経営基盤の強度を数値化します。<br><br>各質問に「はい / いいえ / 対象外」でお答えください。<br>診断結果に基づき、<strong>専門チームが最適な改善策</strong>をご提案します。<br><br><strong>所要時間：約3分</strong></textarea>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>CTA（結果画面下部）</h3>
+        <div class="form-group">
+          <label class="form-label">CTAタイトル</label>
+          <input type="text" class="form-input" id="cfg-cta-title" value="公式LINEで詳細を確認">
+        </div>
+        <div class="form-group">
+          <label class="form-label">CTA説明文</label>
+          <input type="text" class="form-input" id="cfg-cta-desc" value="対策が必要な番号を公式LINEで送信すると該当企業の詳細テンプレートが届きます。">
+        </div>
+        <div class="form-group">
+          <label class="form-label">LINE URL</label>
+          <input type="text" class="form-input" id="cfg-line-url" value="https://lin.ee/T0mwfPR">
+        </div>
+      </div>
+
+      <button class="btn btn-primary" onclick="saveGeneral()" style="width:100%;padding:16px;font-size:16px;letter-spacing:2px;">基本設定を保存</button>
+    </div>
+
+    <!-- 質問管理タブ -->
+    <div class="tab-content" id="tab-questions">
+      <div class="card">
+        <h3>質問一覧</h3>
+        <p class="card-desc">質問の編集・並び替え・追加・削除ができます。</p>
+        <div id="question-list">
+          <div class="loading"><div class="spinner"></div>読み込み中...</div>
+        </div>
+        <button class="btn btn-outline" onclick="openAddQuestion()" style="width:100%;margin-top:16px;">+ 質問を追加</button>
+      </div>
+      <button class="btn btn-primary" onclick="saveQuestions()" style="width:100%;padding:16px;font-size:16px;letter-spacing:2px;">質問設定を保存</button>
+    </div>
+
+    <!-- 営業マン管理タブ -->
+    <div class="tab-content" id="tab-reps">
+      <div class="card">
+        <h3>営業マン一覧</h3>
+        <p class="card-desc">担当営業マンの追加・削除ができます。</p>
+        <div id="rep-list"></div>
+        <div style="border-top: 1px solid #eee; padding-top: 16px; margin-top: 16px;">
+          <h3 style="font-size:14px;color:#555;">新しい営業マンを追加</h3>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+            <input type="text" class="form-input" id="new-rep-name" placeholder="名前（カタカナ）" style="flex:1;min-width:150px;">
+            <input type="email" class="form-input" id="new-rep-email" placeholder="メールアドレス" style="flex:1;min-width:200px;">
+            <button class="btn btn-success" onclick="addRep()">追加</button>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="saveReps()" style="width:100%;padding:16px;font-size:16px;letter-spacing:2px;">営業マン設定を保存</button>
+    </div>
+
+    <!-- 回答結果タブ -->
+    <div class="tab-content" id="tab-results">
+      <div class="card">
+        <h3>診断結果一覧</h3>
+        <p class="card-desc">スプレッドシートに記録された回答結果を表示します。</p>
+        <button class="btn btn-outline btn-sm" onclick="loadResults()" style="margin-bottom:16px;">最新データを取得</button>
+        <div style="overflow-x:auto;">
+          <div id="results-container">
+            <div class="loading"><div class="spinner"></div>読み込み中...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 質問編集モーダル -->
+<div class="modal-overlay" id="modal-question">
+  <div class="modal">
+    <h3 id="modal-q-title">質問を編集</h3>
+    <input type="hidden" id="edit-q-index">
+    <div class="form-group">
+      <label class="form-label">質問文</label>
+      <textarea class="form-textarea" id="edit-q-text" rows="3"></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">ヒント（補足説明）</label>
+      <textarea class="form-textarea" id="edit-q-hint" rows="2"></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">カテゴリ</label>
+      <select class="form-select" id="edit-q-cat">
+        <option value="cost">コスト削減</option>
+        <option value="risk">リスク回避</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">対応企業名</label>
+      <input type="text" class="form-input" id="edit-q-company">
+    </div>
+    <div class="form-group">
+      <label class="form-label">解決策（結果画面に表示）</label>
+      <input type="text" class="form-input" id="edit-q-solution">
+    </div>
+    <div class="form-group">
+      <label class="form-label">企業番号（公式LINEで送信する番号）</label>
+      <input type="number" class="form-input" id="edit-q-number" min="1">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal('modal-question')">キャンセル</button>
+      <button class="btn btn-primary" onclick="saveQuestionEdit()">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- トースト -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================
+// 設定
+// ============================================
+// GAS WebアプリのURL（デプロイ後に設定）
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbzstLJwDbvlUCasAPCDaFi9CaA57ok_znD43T6OwRFrG_iX8CoZz0MNxAZVz1RpHJIX/exec';
+
+// 管理者認証情報（GASから取得に変更可能）
+const ADMIN_ID = 'umidas-admin';
+const ADMIN_PASS = 'teppeki2026!';
+
+// ============================================
+// 状態管理
+// ============================================
+let config = {
+  general: {},
+  questions: [],
+  reps: [],
+  companyNumbers: {}
+};
+
+// ============================================
+// ログイン
+// ============================================
+function doLogin() {
+  const id = document.getElementById('login-id').value.trim();
+  const pass = document.getElementById('login-pass').value;
+  if (id === ADMIN_ID && pass === ADMIN_PASS) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('admin-screen').style.display = 'block';
+    sessionStorage.setItem('teppeki-admin', 'true');
+    loadConfig();
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+  }
+}
+
+function doLogout() {
+  sessionStorage.removeItem('teppeki-admin');
+  document.getElementById('admin-screen').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('login-id').value = '';
+  document.getElementById('login-pass').value = '';
+  document.getElementById('login-error').style.display = 'none';
+}
+
+// セッション復帰
+if (sessionStorage.getItem('teppeki-admin') === 'true') {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('admin-screen').style.display = 'block';
+  loadConfig();
+}
+
+// ============================================
+// タブ切り替え
+// ============================================
+function switchTab(name) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+  if (name === 'results') loadResults();
+}
+
+// ============================================
+// GASからデータ読み込み
+// ============================================
+function loadConfig() {
+  fetch(GAS_URL + '?action=getConfig')
+    .then(r => r.json())
+    .then(data => {
+      if (data.status === 'ok' && data.config) {
+        config = data.config;
+        renderGeneral();
+        renderQuestions();
+        renderReps();
+      } else {
+        // 設定シートがまだない場合、デフォルト値を使用
+        loadDefaults();
+      }
+    })
+    .catch(() => {
+      loadDefaults();
+    });
+}
+
+function loadDefaults() {
+  config.general = {
+    title: '鉄壁診断',
+    subtitle: 'あなたの会社の経営基盤は盤石ですか？',
+    subtitle2: '18の質問で脆弱性を診断します',
+    intro: document.getElementById('cfg-intro').value,
+    ctaTitle: '公式LINEで詳細を確認',
+    ctaDesc: '対策が必要な番号を公式LINEで送信すると該当企業の詳細テンプレートが届きます。',
+    lineUrl: 'https://lin.ee/T0mwfPR'
+  };
+  config.questions = [
+    { q: "新規顧客の獲得に、効率的なリード獲得の仕組みがありますか？", hint: "テレアポや飛び込み以外に、決裁者に直接アプローチできる手段があるか", cat: "cost", company: "ApoLink / SCORE X", solution: "リード獲得プラットフォームの導入", number: 1 },
+    { q: "複合機（コピー機）の印刷コストを過去1年以内に見直しましたか？", hint: "カウンター料金やリース料金を他社と比較していますか", cat: "cost", company: "バリューイノベーション", solution: "複合機コストの最適化提案", number: 2 },
+    { q: "食材・食品の仕入れコストを定期的に見直していますか？", hint: "飲食店・食品関連企業の場合、仕入れ先の比較検討を行っているか", cat: "cost", company: "月兎ソース", solution: "食品仕入れコストの最適化", number: 3 },
+    { q: "損害保険の契約内容を過去2年以内に見直しましたか？", hint: "火災保険・賠償責任保険等の補償内容と保険料が適正か確認していますか", cat: "cost", company: "エクセルリンク / GOEN", solution: "損害保険プランの最適化", number: 4 },
+    { q: "オフィス用品・消耗品の購入コストを最適化していますか？", hint: "文房具やコピー用紙などを最安値で購入できる仕組みがあるか", cat: "cost", company: "ナナ文具（ASKUL代理店）", solution: "オフィス用品の調達コスト削減", number: 5 },
+    { q: "物流・輸送・貿易のコストを定期的に見直していますか？", hint: "配送料や通関費用などを他社と比較検討していますか", cat: "cost", company: "Sanyo Logistics", solution: "物流・貿易コストの最適化", number: 6 },
+    { q: "店舗やサービスの集客に、効果的なWeb施策を導入していますか？", hint: "MEO対策・口コミ管理・Web広告など、デジタル集客ができていますか", cat: "cost", company: "y-Doc", solution: "飲食店・店舗のデジタル集客支援", number: 7 },
+    { q: "採用活動において、効率的な母集団形成の手段がありますか？", hint: "求人媒体の費用対効果を把握し、ターゲットに合った採用チャネルがあるか", cat: "cost", company: "ヒトミー", solution: "採用プラットフォームの最適化", number: 8 },
+    { q: "オフィスや店舗の家賃を過去3年以内に交渉・見直ししましたか？", hint: "賃料相場と比較して適正な賃料を支払っているか把握していますか", cat: "cost", company: "アクトプロ", solution: "家賃の適正化コンサルティング", number: 9 },
+    { q: "電力会社の契約を見直し、最適な電力プランを選択していますか？", hint: "大手電力や新電力の比較検討を行いましたか", cat: "cost", company: "アクトプロ", solution: "電力コストの削減提案", number: 10 },
+    { q: "顧客管理（CRM）を効率的に行えるシステムを導入していますか？", hint: "顧客情報や営業進捗をExcelではなく、専用システムで管理しているか", cat: "cost", company: "Aitane", solution: "AI搭載CRMの導入", number: 11 },
+    { q: "海外からの資材・原材料の調達ルートを最適化していますか？", hint: "中間マージンの削減や、より有利な調達先の開拓ができているか", cat: "cost", company: "日本国際貿易センター", solution: "国際調達ルートの最適化", number: 12 },
+    { q: "自社名でネット検索した際に、ネガティブな情報が表示されていませんか？", hint: "「〇〇会社 やばい」「〇〇会社 評判」などで悪い情報が出ていないか確認していますか", cat: "risk", company: "AIDホールディングス", solution: "風評被害モニタリング・対策", number: 13 },
+    { q: "労務トラブル（残業・ハラスメント・退職等）への相談体制がありますか？", hint: "社労士や労務の専門家にすぐ相談できる体制が整っていますか", cat: "risk", company: "経営トータルサポート", solution: "社労士による労務管理サポート", number: 14 },
+    { q: "情報セキュリティ対策（ウイルス・不正アクセス・情報漏洩）は万全ですか？", hint: "セキュリティソフトの導入だけでなく、社内ルールや教育が整備されているか", cat: "risk", company: "カスタマークラウド", solution: "セキュリティシステムの構築", number: 15 },
+    { q: "税務リスクに対して、定期的に専門家（税理士）のチェックを受けていますか？", hint: "節税対策や税務調査への備えが十分にできていますか", cat: "risk", company: "EXE Partnerz", solution: "税務コンサルティング", number: 16 },
+    { q: "取引先の信用調査を行い、売掛金の未回収リスクに備えていますか？", hint: "新規取引先の与信管理や、売掛金の保証サービスを利用していますか", cat: "risk", company: "アラームボックス", solution: "AI与信管理・売掛金保証", number: 17 },
+    { q: "上記すべてを横断的に見直す「経営基盤の定期点検」を実施していますか？", hint: "コスト・リスクの総合的な見直しを年1回以上行っていますか", cat: "risk", company: "UMIDAS", solution: "経営基盤の総合診断・改善提案", number: 18 }
+  ];
+  config.reps = [
+    { name: "ウエノツヨシ", email: "ueno.tsuyoshi@umidas.group" },
+    { name: "クマガイリュウショウ", email: "kumagai.ryusho@umidas.group" },
+    { name: "イバラギヒカル", email: "ibaragi.hikaru@umidas.group" },
+    { name: "カネモトトモハル", email: "kanemoto.tomoharu@umidas.group" },
+    { name: "ワタナベタイト", email: "watanabe.taito@umidas.group" }
+  ];
+  renderGeneral();
+  renderQuestions();
+  renderReps();
+}
+
+// ============================================
+// 基本設定
+// ============================================
+function renderGeneral() {
+  const g = config.general;
+  if (!g) return;
+  document.getElementById('cfg-title').value = g.title || '';
+  document.getElementById('cfg-subtitle').value = g.subtitle || '';
+  document.getElementById('cfg-subtitle2').value = g.subtitle2 || '';
+  document.getElementById('cfg-intro').value = g.intro || '';
+  document.getElementById('cfg-cta-title').value = g.ctaTitle || '';
+  document.getElementById('cfg-cta-desc').value = g.ctaDesc || '';
+  document.getElementById('cfg-line-url').value = g.lineUrl || '';
+}
+
+function saveGeneral() {
+  config.general = {
+    title: document.getElementById('cfg-title').value,
+    subtitle: document.getElementById('cfg-subtitle').value,
+    subtitle2: document.getElementById('cfg-subtitle2').value,
+    intro: document.getElementById('cfg-intro').value,
+    ctaTitle: document.getElementById('cfg-cta-title').value,
+    ctaDesc: document.getElementById('cfg-cta-desc').value,
+    lineUrl: document.getElementById('cfg-line-url').value
+  };
+  saveConfig('基本設定を保存しました');
+}
+
+// ============================================
+// 質問管理
+// ============================================
+function renderQuestions() {
+  const list = document.getElementById('question-list');
+  if (!config.questions || config.questions.length === 0) {
+    list.innerHTML = '<p style="color:#888;text-align:center;padding:20px;">質問がありません</p>';
+    return;
+  }
+  list.innerHTML = config.questions.map((q, i) => {
+    const catClass = q.cat === 'cost' ? 'q-cat-cost' : 'q-cat-risk';
+    const catLabel = q.cat === 'cost' ? 'コスト削減' : 'リスク回避';
+    return `
+      <div class="q-item" id="q-item-${i}">
+        <div class="q-actions">
+          ${i > 0 ? `<button class="btn btn-outline btn-sm" onclick="moveQuestion(${i},-1)">↑</button>` : ''}
+          ${i < config.questions.length - 1 ? `<button class="btn btn-outline btn-sm" onclick="moveQuestion(${i},1)">↓</button>` : ''}
+          <button class="btn btn-outline btn-sm" onclick="editQuestion(${i})">編集</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteQuestion(${i})">削除</button>
+        </div>
+        <div class="q-num">Q${i + 1}（No.${q.number || '?'}）</div>
+        <span class="q-cat-badge ${catClass}">${catLabel}</span>
+        <div style="font-weight:600;margin-bottom:4px;">${escHtml(q.q)}</div>
+        <div style="font-size:12px;color:#888;">${escHtml(q.hint)}</div>
+        <div style="font-size:12px;color:#1A6CB5;margin-top:4px;">対応: ${escHtml(q.company)} / ${escHtml(q.solution)}</div>
+      </div>`;
+  }).join('');
+}
+
+function editQuestion(idx) {
+  const q = config.questions[idx];
+  document.getElementById('modal-q-title').textContent = `Q${idx + 1} を編集`;
+  document.getElementById('edit-q-index').value = idx;
+  document.getElementById('edit-q-text').value = q.q;
+  document.getElementById('edit-q-hint').value = q.hint;
+  document.getElementById('edit-q-cat').value = q.cat;
+  document.getElementById('edit-q-company').value = q.company;
+  document.getElementById('edit-q-solution').value = q.solution;
+  document.getElementById('edit-q-number').value = q.number || '';
+  openModal('modal-question');
+}
+
+function saveQuestionEdit() {
+  const idx = parseInt(document.getElementById('edit-q-index').value);
+  const isNew = idx === -1;
+  const q = {
+    q: document.getElementById('edit-q-text').value,
+    hint: document.getElementById('edit-q-hint').value,
+    cat: document.getElementById('edit-q-cat').value,
+    company: document.getElementById('edit-q-company').value,
+    solution: document.getElementById('edit-q-solution').value,
+    number: parseInt(document.getElementById('edit-q-number').value) || config.questions.length + 1
+  };
+  if (isNew) {
+    config.questions.push(q);
+  } else {
+    config.questions[idx] = q;
+  }
+  renderQuestions();
+  closeModal('modal-question');
+  showToast(isNew ? '質問を追加しました' : '質問を更新しました', 'success');
+}
+
+function openAddQuestion() {
+  document.getElementById('modal-q-title').textContent = '新しい質問を追加';
+  document.getElementById('edit-q-index').value = -1;
+  document.getElementById('edit-q-text').value = '';
+  document.getElementById('edit-q-hint').value = '';
+  document.getElementById('edit-q-cat').value = 'cost';
+  document.getElementById('edit-q-company').value = '';
+  document.getElementById('edit-q-solution').value = '';
+  document.getElementById('edit-q-number').value = config.questions.length + 1;
+  openModal('modal-question');
+}
+
+function deleteQuestion(idx) {
+  if (!confirm(`Q${idx + 1}「${config.questions[idx].q.substring(0, 30)}...」を削除しますか？`)) return;
+  config.questions.splice(idx, 1);
+  renderQuestions();
+  showToast('質問を削除しました', 'success');
+}
+
+function moveQuestion(idx, dir) {
+  const newIdx = idx + dir;
+  if (newIdx < 0 || newIdx >= config.questions.length) return;
+  const temp = config.questions[idx];
+  config.questions[idx] = config.questions[newIdx];
+  config.questions[newIdx] = temp;
+  renderQuestions();
+}
+
+function saveQuestions() {
+  saveConfig('質問設定を保存しました');
+}
+
+// ============================================
+// 営業マン管理
+// ============================================
+function renderReps() {
+  const list = document.getElementById('rep-list');
+  if (!config.reps || config.reps.length === 0) {
+    list.innerHTML = '<p style="color:#888;text-align:center;padding:20px;">営業マンが登録されていません</p>';
+    return;
+  }
+  list.innerHTML = config.reps.map((r, i) => `
+    <div class="rep-item">
+      <div class="rep-name">${escHtml(r.name)}</div>
+      <div class="rep-email">${escHtml(r.email)}</div>
+      <button class="btn btn-danger btn-sm" onclick="deleteRep(${i})">削除</button>
+    </div>
+  `).join('');
+}
+
+function addRep() {
+  const name = document.getElementById('new-rep-name').value.trim();
+  const email = document.getElementById('new-rep-email').value.trim();
+  if (!name || !email) {
+    showToast('名前とメールアドレスを入力してください', 'error');
+    return;
+  }
+  config.reps.push({ name, email });
+  document.getElementById('new-rep-name').value = '';
+  document.getElementById('new-rep-email').value = '';
+  renderReps();
+  showToast(`${name} を追加しました`, 'success');
+}
+
+function deleteRep(idx) {
+  if (!confirm(`${config.reps[idx].name} を削除しますか？`)) return;
+  config.reps.splice(idx, 1);
+  renderReps();
+  showToast('削除しました', 'success');
+}
+
+function saveReps() {
+  saveConfig('営業マン設定を保存しました');
+}
+
+// ============================================
+// GASに設定を保存
+// ============================================
+function saveConfig(msg) {
+  showToast('保存中...', '');
+  fetch(GAS_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      action: 'saveConfig',
+      config: config
+    })
+  }).then(() => {
+    showToast(msg || '保存しました', 'success');
+  }).catch(() => {
+    showToast('保存に失敗しました', 'error');
+  });
+}
+
+// ============================================
+// 回答結果
+// ============================================
+function loadResults() {
+  const container = document.getElementById('results-container');
+  container.innerHTML = '<div class="loading"><div class="spinner"></div>読み込み中...</div>';
+
+  fetch(GAS_URL + '?action=getResults')
+    .then(r => r.json())
+    .then(data => {
+      if (data.status === 'ok' && data.results && data.results.length > 0) {
+        let html = '<table class="results-table"><thead><tr>'
+          + '<th>日時</th><th>お客様名</th><th>担当</th><th>スコア</th><th>ランク</th><th>弱点項目</th>'
+          + '</tr></thead><tbody>';
+        // 新しい順に表示
+        data.results.reverse().forEach(r => {
+          const score = parseInt(r.score) || 0;
+          let color = '#f44336';
+          if (score >= 90) color = '#FFD700';
+          else if (score >= 70) color = '#4CAF50';
+          else if (score >= 50) color = '#FF9800';
+          html += `<tr>
+            <td>${escHtml(r.timestamp || '')}</td>
+            <td>${escHtml(r.customer_name || '')}</td>
+            <td>${escHtml(r.rep_name || '')}</td>
+            <td><span class="score-badge" style="background:${color}">${score}点</span></td>
+            <td>${escHtml(r.rank || '')}</td>
+            <td style="max-width:200px;font-size:11px;color:#666;">${escHtml(r.weakness || '')}</td>
+          </tr>`;
+        });
+        html += '</tbody></table>';
+        container.innerHTML = html;
+      } else {
+        container.innerHTML = '<p style="color:#888;text-align:center;padding:20px;">まだ回答結果がありません</p>';
+      }
+    })
+    .catch(() => {
+      container.innerHTML = '<p style="color:#f44336;text-align:center;padding:20px;">データの取得に失敗しました</p>';
+    });
+}
+
+// ============================================
+// ユーティリティ
+// ============================================
+function openModal(id) { document.getElementById(id).classList.add('show'); }
+function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+
+function escHtml(str) {
+  const d = document.createElement('div');
+  d.textContent = str || '';
+  return d.innerHTML;
+}
+
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (type ? ' ' + type : '');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => { t.className = 'toast'; }, 3000);
+}
+
+// モーダル外クリックで閉じる
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', (e) => {
+    if (e.target === m) m.classList.remove('show');
+  });
+});
+</script>
+
+</body>
+</html>
